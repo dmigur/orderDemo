@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:oxm="http://www.springframework.org/schema/oxm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:sws="http://www.springframework.org/schema/web-services"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+	http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm.xsd
+	http://www.springframework.org/schema/web-services http://www.springframework.org/schema/web-services/web-services.xsd">
+    <sws:annotation-driven marshaller="hrisMarshaller" unmarshaller="hrisMarshaller"/>
+
+    <bean class="com.tallink.ittel.ws.client.api.hris.ObjectFactory"/>
+
+    <util:list id="schemas">
+        <value>classpath:xsd/HrisAll.xsd</value>
+    </util:list>
+
+    <bean id="schemaCollection"
+          class="org.springframework.xml.xsd.commons.CommonsXsdSchemaCollection">
+        <property name="xsds" ref="schemas"/>
+        <property name="inline" value="true"/>
+    </bean>
+
+    <bean id="messageFactory" class="org.springframework.ws.soap.saaj.SaajSoapMessageFactory">
+        <property name="soapVersion">
+            <util:constant static-field="org.springframework.ws.soap.SoapVersion.SOAP_12"/>
+        </property>
+    </bean>
+
+    <bean id="hris" class="org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition">
+        <property name="schemaCollection" ref="schemaCollection"/>
+        <property name="portTypeName" value="HRIS"/>
+        <property name="locationUri" value="${hris.ws.locationUri}"/>
+        <property name="createSoap12Binding" value="true"/>
+        <property name="createSoap11Binding" value="false"/>
+    </bean>
+    <oxm:jaxb2-marshaller id="hrisMarshaller"  context-path="${hris.ws.generatePackage}"/>
+
+    <bean class="org.springframework.ws.server.endpoint.adapter.MarshallingMethodEndpointAdapter">
+        <description>Enables the MessageDispatchServlet to invoke methods
+            requiring OXM marshalling.
+        </description>
+        <constructor-arg ref="hrisMarshaller"/>
+    </bean>
+
+
+</beans>

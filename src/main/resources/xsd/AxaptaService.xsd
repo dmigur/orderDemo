@@ -1,0 +1,633 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified" xmlns="http://www.tallink.com/hris/"
+           targetNamespace="http://www.tallink.com/hris/">
+    <xs:include schemaLocation="BaseTypes.xsd"/>
+
+    <xs:element name="CreateVacationApplicationRequest">
+        <xs:annotation>
+            <xs:documentation>Request for getting user group</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="AbsenceTypeRecId" type="xs:long"/>
+                        <xs:element name="EmploymentRecId" type="xs:long"/>
+                        <xs:element name="Days" type="xs:integer"/>
+                        <xs:element name="DateRange" type="DateRange"/>
+                        <xs:element name="Text" type="xs:string"/>
+                        <xs:element name="CompanyCode" type="xs:string"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="CreateVacationApplicationResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting user group</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="VacationApplicationRecId" type="xs:long"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="ApproveVacationApplicationRequest">
+        <xs:annotation>
+            <xs:documentation>Request for approving vacation application</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="IdentityId" type="xs:integer"/>
+                        <xs:element name="VacationApplicationRecId" type="xs:long"/>
+                        <xs:element name="CompanyCode" type="xs:string"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ApproveVacationApplicationResponse">
+        <xs:annotation>
+            <xs:documentation>Response for approving vacation application</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="DeclineVacationApplicationRequest">
+        <xs:annotation>
+            <xs:documentation>Request for Declining vacation application</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="VacationApplicationRecId" type="xs:long"/>
+                        <xs:element name="IdentityId" type="xs:integer"/>
+                        <xs:element name="CompanyCode" type="xs:string"/>
+                        <xs:element name="Comment" type="xs:string"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="DeclineVacationApplicationResponse">
+        <xs:annotation>
+            <xs:documentation>Response for Declining vacation application</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="ForwardVacationApplicationRequest">
+        <xs:annotation>
+            <xs:documentation>Request for accepting vacation application</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="VacationApplicationRecId" type="xs:long"/>
+                        <xs:element name="IdentityId" type="xs:integer"/>
+                        <xs:element name="CompanyCode" type="xs:string"/>
+                        <xs:element name="Comment" type="xs:string"/>
+                        <xs:element name="ForwardedBy" type="xs:integer"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ForwardVacationApplicationResponse">
+        <xs:annotation>
+            <xs:documentation>Response for accepting vacation application</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="ChangeVacationApplicationRequest">
+        <xs:annotation>
+            <xs:documentation>Request for accepting vacation application</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="AbsenceRecId" type="xs:long"/>
+                        <xs:element name="AbsenceTypeRecId" type="xs:long"/>
+                        <xs:element name="Days" type="xs:integer"/>
+                        <xs:element name="DateRange" type="DateRange"/>
+                        <xs:element name="Text" type="xs:string"/>
+                        <xs:element name="CompanyCode" type="xs:string"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ChangeVacationApplicationResponse">
+        <xs:annotation>
+            <xs:documentation>Response for accepting vacation application</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="CalculateVacationDaysRequest">
+        <xs:annotation>
+            <xs:documentation>Request for accepting vacation application</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="EmploymentRecId" type="xs:long"/>
+                        <xs:element name="AbsenceTypeRecId" type="xs:long"/>
+                        <xs:element name="DateRange" type="DateRange"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="CalculateVacationDaysResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting  vacation application</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="Days" type="xs:integer"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetVacationApplicationsByEmploymentRequest">
+        <xs:annotation>
+            <xs:documentation>Request for getting vacation applications by employmentRecId OR IdentityId</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="IdentityId" type="xs:integer" minOccurs="0"/>
+                        <xs:element name="EmploymentRecId" type="xs:long" minOccurs="0"/>
+                        <xs:element name="CompanyCode" type="xs:string" minOccurs="0"/>
+                        <xs:element name="DateRange" type="DateRange"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetVacationApplicationsByEmploymentResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting vacation applications by employmentRecId</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="VacationApplicationList" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="VacationApplication" type="VacationApplication" minOccurs="0"
+                                                maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetVacationApplicationsBySupervisorRequest">
+        <xs:annotation>
+            <xs:documentation>Request for getting vacation applications by supervisor employment number OR identityId</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="identityId" type="xs:integer" minOccurs="0"/>
+                        <xs:element name="PositionRecId" type="xs:long" minOccurs="0"/>
+                        <xs:element name="CompanyCode" type="xs:string" minOccurs="0"/>
+                        <xs:element name="DateRange" type="DateRange"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetVacationApplicationsBySupervisorResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting vacation applications by supervisor employment number</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="VacationApplicationList" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="VacationApplication" type="VacationApplication" minOccurs="0"
+                                                maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetVacationApplicationsByOperatingUnitRequest">
+        <xs:annotation>
+            <xs:documentation>Request for getting vacation applications by operating unit number</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="OperatingUnitNumber" type="xs:string"/>
+                        <xs:element name="IncludeSubDepartments" type="xs:boolean"/>
+                        <xs:element name="DateRange" type="DateRange"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetVacationApplicationsByOperatingUnitResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting vacation applications by operating unit number</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="VacationApplicationList" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="VacationApplication" type="VacationApplication" minOccurs="0"
+                                                maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetVacationApplicationsForOPReportManagerRequest">
+        <xs:annotation>
+            <xs:documentation>Request for getting vacation applications for operating unit report manager</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="OperatingUnitList" minOccurs="1">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="OperatingUnit" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="DateRange" type="DateRange"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetVacationApplicationsForOPReportManagerResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting vacation applications for operating unit report manager</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="VacationApplicationList" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="VacationApplication" type="VacationApplication" minOccurs="0" maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetManagedByIdentityOperatingUnitsRequest">
+        <xs:annotation>
+            <xs:documentation>Request for getting operating units where Identity is manager or report manager</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="IdentityId" type="xs:integer"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetManagedByIdentityOperatingUnitsResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting operating units where Identity is manager or report manager</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="OperatingUnitsList" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="OperatingUnit" type="xs:string" minOccurs="0"
+                                                maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetVacationTypesRequest">
+        <xs:annotation>
+            <xs:documentation>Request for getting vacation types by employment id</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="EmploymentRecId" type="xs:long"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetVacationTypesResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting vacation types by employment id</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="AbsenceTypeList" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="AbsenceType" type="AbsenceType" minOccurs="0"
+                                                maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetEmploymentsRequest">
+        <xs:annotation>
+            <xs:documentation>Request for getting employments</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="IdentityId" type="xs:integer"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetEmploymentsResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting employments</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="EmploymentList" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="Employment" type="Employment" minOccurs="0"
+                                                maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="AddDocumentRequest">
+        <xs:annotation>
+            <xs:documentation>Request for adding document</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="EmploymentRecId" type="xs:long"/>
+                        <xs:element name="CompanyCode" type="xs:string"/>
+                        <xs:element name="VacationApplicationRecId" type="xs:long"/>
+                        <xs:element name="FileName" type="xs:string"/>
+                        <xs:element name="FileContent" type="xs:base64Binary"/>
+                        <xs:element name="Comment" type="xs:string"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="AddDocumentResponse">
+        <xs:annotation>
+            <xs:documentation>Response for adding document</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="DeleteDocumentRequest">
+        <xs:annotation>
+            <xs:documentation>Request for deleting document</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="DocumentRecId" type="xs:long"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="DeleteDocumentResponse">
+        <xs:annotation>
+            <xs:documentation>Response for deleting document</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetDocumentRequest">
+        <xs:annotation>
+            <xs:documentation>Request for getting document</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="DocumentRecId" type="xs:long"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetDocumentResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting document</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="Document" type="AbsenceDocument"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="DeleteVacationApplicationRequest">
+        <xs:annotation>
+            <xs:documentation>Request for deleting vacation application</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="VacationApplicationRecId" type="xs:long"/>
+                        <xs:element name="CompanyCode" type="xs:string"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="DeleteVacationApplicationResponse">
+        <xs:annotation>
+            <xs:documentation>Response for deleting vacation application</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetDirectSupervisorRequest">
+    <xs:annotation>
+        <xs:documentation>Request for getting employee direct supervisor</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+        <xs:complexContent>
+            <xs:extension base="HRISBaseRequest">
+                <xs:sequence>
+                    <xs:element name="EmploymentRecId" type="xs:long"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:element>
+    <xs:element name="GetDirectSupervisorResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting employee direct supervisor</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="IdentityList" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="Identity" type="IdentitySearchResult" minOccurs="0"
+                                                maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetVacationApplicationHistoryRequest">
+        <xs:annotation>
+            <xs:documentation>Request for getting vacation application history</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="ApplicationRecId" type="xs:long"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetVacationApplicationHistoryResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting vacation application history</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="VacationApplicationHistoryList" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="VacationApplicationHistory" type="VacationApplicationHistory" minOccurs="0"
+                                                maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

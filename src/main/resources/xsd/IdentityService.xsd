@@ -1,0 +1,705 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified" xmlns="http://www.tallink.com/hris/"
+           targetNamespace="http://www.tallink.com/hris/">
+    <xs:include schemaLocation="BaseTypes.xsd"/>
+    <xs:element name="UpdateIdentityRequest">
+        <xs:annotation>
+            <xs:documentation>Request for updating existing identity
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="Identity" type="Identity"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="UpdateIdentityResponse" nillable="false">
+        <xs:annotation>
+            <xs:documentation>Response for updating existing identity
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="Identity" type="Identity"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetIdentitiesRequest">
+        <xs:annotation>
+            <xs:documentation>Request for getting identity
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="Options">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="LoadPicture" type="xs:boolean" default="true"/>
+                                    <xs:element name="LoadPosition" type="xs:boolean" default="false"/>
+                                    <xs:element name="EnableLikeSearch" type="xs:boolean" default="false"/>
+                                    <xs:element name="Sorting" minOccurs="0">
+                                        <xs:complexType>
+                                            <xs:sequence>
+                                                <xs:element name="ByField" type="identitySortingFieldList"/>
+                                            </xs:sequence>
+                                        </xs:complexType>
+                                    </xs:element>
+                                    <xs:element name="ReturnRange" minOccurs="0">
+                                        <xs:complexType>
+                                            <xs:sequence>
+                                                <xs:element name="From" type="xs:int" default="0" minOccurs="0"/>
+                                                <xs:element name="To" type="xs:int"/>
+                                            </xs:sequence>
+                                        </xs:complexType>
+                                    </xs:element>
+                                    <xs:element name="CreatedDateRange" type="DateRange" minOccurs="0"/>
+                                    <xs:element name="UpdatedDateRange" type="DateRange" minOccurs="0"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="Identity" type="Identity"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetIdentitiesResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting identity
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="Identities" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="Identity" type="Identity"
+                                                minOccurs="0" maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="SyncIdentityWithSeawareClientRequest">
+        <xs:annotation>
+            <xs:documentation>Request for synchornizing Seaware Client with Identity
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="IdentityId" type="xs:integer"/>
+                        <xs:element name="StaffCountryCode" type="xs:string" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="SyncIdentityWithSeawareClientResponse">
+        <xs:annotation>
+            <xs:documentation>Response for synchronization identity with seaware
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="Identity" type="Identity"/>
+                        <xs:element name="DuplicateClients" type="xs:string" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="CreateIdentityRequest">
+        <xs:annotation>
+            <xs:documentation>Request for creation new identity
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="FirstName" type="FirstName"/>
+                        <xs:element name="LastName" type="LastName"/>
+                        <xs:element name="BirthDate" type="xs:date"/>
+                        <xs:element name="Gender" type="Gender"/>
+                        <xs:element name="Picture" minOccurs="0" type="xs:base64Binary"/>
+                        <xs:element name="PersonalId" type="PersonalCode"/>
+                        <xs:element name="HRSystemReferences" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="HRSystemReference" type="HRSystemReference"
+                                                minOccurs="0" maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="IdentityContactInfoList" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="IdentityContactInfo" type="IdentityContactInfo" minOccurs="0"
+                                                maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="Citizenship" type="CitizenshipEnum"/>
+                        <xs:element name="FirstLanguage" type="LanguageEnum" minOccurs="0"/>
+                        <xs:element name="JobDescription" type="xs:string" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="CreateIdentityResponse">
+        <xs:annotation>
+            <xs:documentation>Response for creation new identity
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="Identity" type="Identity"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetIdentitiesSearchResultCountRequest">
+        <xs:annotation>
+            <xs:documentation>Request for getting search result identities count
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="Options">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="EnableLikeSearch" type="xs:boolean" default="false"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="Identity" type="Identity"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetIdentitiesSearchResultCountResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting search result identities count
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="IdentitiesSearchResultCount" type="xs:int"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="SendWelcomeMailRequest">
+        <xs:annotation>
+            <xs:documentation>Request for sending welcome email to new employee
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="IdentityId" type="xs:integer"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="SendWelcomeMailResponse">
+        <xs:annotation>
+            <xs:documentation>Response for sending welcome email to new employee
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="Identity" type="Identity"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="UpdateIdentityUnpersonRequest">
+        <xs:annotation>
+            <xs:documentation>Request for updating existing identity unperson
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="IdentityUnperson" type="IdentityUnperson"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="UpdateIdentityUnpersonResponse" nillable="false">
+        <xs:annotation>
+            <xs:documentation>Response for updating existing identity unperson
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="IdentityUnperson" type="IdentityUnperson"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="CreateIdentityUnpersonRequest">
+        <xs:annotation>
+            <xs:documentation>Request for creation identity unperson
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="IdentityUnperson" type="IdentityUnperson"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="CreateIdentityUnpersonResponse" nillable="false">
+        <xs:annotation>
+            <xs:documentation>Response for creation identity unperson
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="IdentityUnperson" type="IdentityUnperson"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetIdentitiesUnpersonRequest">
+        <xs:annotation>
+            <xs:documentation>Request for getting identity unperson
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="Options">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="LoadPicture" type="xs:boolean" default="true"/>
+                                    <xs:element name="EnableLikeSearch" type="xs:boolean" default="false"/>
+                                    <xs:element name="CreatedDateRange" type="DateRange" minOccurs="0"/>
+                                    <xs:element name="UpdatedDateRange" type="DateRange" minOccurs="0"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="IdentityUnperson" type="IdentityUnperson"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetIdentitiesUnpersonResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting identity unperson
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="Identities" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="IdentityUnperson" type="IdentityUnperson"
+                                                minOccurs="0" maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetIdentityPhoneNumberFromInnovaphoneRequest">
+        <xs:annotation>
+            <xs:documentation>Get identity short and full phone from Innovaphone by IdentityId</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="IdentityId" type="xs:integer" minOccurs="1"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetIdentityPhoneNumberFromInnovaphoneResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting identity short and full phone from Innovaphone</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="shortPhone" type="xs:string"/>
+                        <xs:element name="fullPhone" type="xs:string"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetInnovaphoneUserRequest">
+        <xs:annotation>
+            <xs:documentation>Get Innovaphone user by Cn</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="Cn" type="xs:string" minOccurs="1"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetInnovaphoneUserResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting innovaphone user connected with HRIS</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="PBXUserInfo" type="PBXUserInfo"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="UpdateInnovaphoneUserRequest">
+        <xs:annotation>
+            <xs:documentation>Request for updating innovaphone user</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="PBXUserInfo" type="PBXUserInfo"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="UpdateInnovaphoneUserResponse">
+        <xs:annotation>
+            <xs:documentation>Response for updating innovaphone user</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="PBXUserInfo" type="PBXUserInfo"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="AddInnovaphoneUserRequest">
+        <xs:annotation>
+            <xs:documentation>Request for adding innovaphone user</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="PBXUserInfo" type="PBXUserInfo"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="AddInnovaphoneUserResponse">
+        <xs:annotation>
+            <xs:documentation>Response for adding innovaphone user</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="PBXUserInfo" type="PBXUserInfo"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="RemoveInnovaphoneUserRequest">
+        <xs:annotation>
+            <xs:documentation>Request for removing innovaphone record</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="Cn" type="xs:string"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="RemoveInnovaphoneUserResponse">
+        <xs:annotation>
+            <xs:documentation>Response on removing innovaphone record</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="IdentitySearchRequest">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="SearchStr" type="xs:string" minOccurs="0"/>
+                        <xs:element name="From" type="xs:integer"/>
+                        <xs:element name="Count" type="xs:integer"/>
+                        <xs:element name="BirthdateRange" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="From" type="MonthDay" minOccurs="0"/>
+                                    <xs:element name="To" type="MonthDay" minOccurs="0"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="Countries" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="Country" type="CountryCodeEnum" minOccurs="0" maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="Teams" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="TeamId" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="OperatingUnits" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="OperatingUnitNumber" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="IdentitySearchResponse">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="FoundTotal" type="xs:integer"/>
+                        <xs:element name="IdentitySearchResult" type="IdentitySearchResult"
+                                    minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="UpdateElasticSearchIndicesRequest">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="UpdateElasticSearchIndicesResponse">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="UpdateJobDescriptionRequest">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="IdentityId" type="xs:integer"/>
+                        <xs:element name="JobDescription" type="xs:string"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="UpdateJobDescriptionResponse">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="Identity" type="Identity"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetRemainingVacationDaysRequest">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="IdentityId" type="xs:integer"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetRemainingVacationDaysResponse">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="RemainingDays" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="RemainingVacationDays" type="RemainingVacationDays"
+                                                minOccurs="0" maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetPastVacationsRequest">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="IdentityId" type="xs:integer"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetPastVacationsResponse">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="Vacations" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="Vacation" type="VacationInfo" minOccurs="0" maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetEmployeeDataRequest">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="IdentityId" type="xs:integer"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetEmployeeDataResponse">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="EmployeeDataList" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="EmployeeData" type="EmployeeData" minOccurs="0" maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="HasReportingEmployeesRequest">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="IdentityId" type="xs:integer"/>
+                        <xs:element name="Email" type="xs:string"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="HasReportingEmployeesResponse">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="IdentityId" type="xs:integer"/>
+                        <xs:element name="Email" type="xs:string"/>
+                        <xs:element name="HasReportingEmployees" type="xs:boolean"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

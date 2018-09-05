@@ -1,0 +1,714 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified" xmlns="http://www.tallink.com/hris/"
+           targetNamespace="http://www.tallink.com/hris/">
+    <xs:include schemaLocation="BaseTypes.xsd"/>
+
+    <xs:element name="GetRecruitmentIdentificationTypesRequest">
+        <xs:annotation>
+            <xs:documentation>Request for getting identification types</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetRecruitmentIdentificationTypesResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting identification types</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="RecruitmentIdentificationTypeList" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="RecruitmentIdentificationType" type="RecruitmentIdentificationType" minOccurs="0"
+                                                maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetRecruitmentAnswerTypesRequest">
+        <xs:annotation>
+            <xs:documentation>Request for getting answer types</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetRecruitmentAnswerTypesResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting answer types</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="RecruitmentAnswerTypeList" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="RecruitmentAnswerType" type="RecruitmentAnswerType" minOccurs="0"
+                                                maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetRecruitmentJobAdQuestionnairyGroupsRequest">
+        <xs:annotation>
+            <xs:documentation>Request for getting job Ad questionnairy groups</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetRecruitmentJobAdQuestionnairyGroupsResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting job Ad questionnairy groups</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="RecruitmentJobAdQuestionnairyGroupList" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="RecruitmentJobAdQuestionnairyGroup" type="RecruitmentJobAdQuestionnairyGroup" minOccurs="0"
+                                                maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetRecruitmentProjectStatusesRequest">
+        <xs:annotation>
+            <xs:documentation>Request for getting project statuses</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetRecruitmentProjectStatusesResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting project statuses</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="RecruitmentProjectStatusList" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="RecruitmentProjectStatus" type="RecruitmentProjectStatus" minOccurs="0"
+                                                maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetRecruitmentLanguageCodesRequest">
+        <xs:annotation>
+            <xs:documentation>Request for getting language codes</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetRecruitmentLanguageCodesResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting language codes</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="RecruitmentLanguageCodeList" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="RecruitmentLanguageCode" type="RecruitmentLanguageCode" minOccurs="0"
+                                                maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetRecruitmentWorkAdCountriesRequest">
+        <xs:annotation>
+            <xs:documentation>Request for getting work AD countries</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetRecruitmentWorkAdCountriesResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting work AD countries</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="RecruitmentAdCountryList" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="RecruitmentAdCountry" type="RecruitmentAdCountry" minOccurs="0"
+                                                maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetRecruitmentWorkCategoriesRequest">
+        <xs:annotation>
+            <xs:documentation>Request for getting work categories</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetRecruitmentWorkCategoriesResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting work categories</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="RecruitmentWorkCategoryList" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="RecruitmentWorkCategory" type="RecruitmentWorkCategory" minOccurs="0"
+                                                maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetRecruitmentSectionTypesRequest">
+        <xs:annotation>
+            <xs:documentation>Request for getting section types</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetRecruitmentSectionTypesResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting section types</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="RecruitmentJobAdSectionTypeList" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="RecruitmentJobAdSectionType" type="RecruitmentJobAdSectionType" minOccurs="0"
+                                                maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetRecruitmentProjectsRequest">
+        <xs:annotation>
+            <xs:documentation>Request for getting recruitment projects</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="WorkAdCountry" type="xs:string"/>
+                        <xs:element name="WorkAdLanguage" type="xs:string"/>
+                        <xs:element name="WorkCategory" type="xs:integer"/>
+                        <xs:element name="WithPicture" type="xs:boolean"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetRecruitmentProjectsResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting recruitment projects</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="RecruitmentProjectList" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="RecruitmentProject" type="RecruitmentProject" minOccurs="0"
+                                                maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetRecruitmentProjectDocumentsRequest">
+        <xs:annotation>
+            <xs:documentation>Request for getting recruitment project documents</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="ProjectId" type="xs:string"/>
+                        <xs:element name="DataArea" type="xs:string"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetRecruitmentProjectDocumentsResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting recruitment project documents</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="RecruitmentDocumentList" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="RecruitmentDocument" type="RecruitmentDocument" minOccurs="0"
+                                                maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetRecruitmentProjectJobAdsRequest">
+        <xs:annotation>
+            <xs:documentation>Request for getting recruitment projects job ads</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="ProjectId" type="xs:string"/>
+                        <xs:element name="WorkAdLanguage" type="xs:string"/>
+                        <xs:element name="WithPicture" type="xs:boolean"/>
+                        <xs:element name="DataArea" type="xs:string"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetRecruitmentProjectJobAdsResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting recruitment project job ads</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="RecruitmentJobAdList" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="RecruitmentJobAd" type="RecruitmentJobAd" minOccurs="0"
+                                                maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="CreateRecruitmentApplicantRequest">
+        <xs:annotation>
+            <xs:documentation>Request for creating recruitment application</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="FirstName" type="xs:string"/>
+                        <xs:element name="LastName" type="xs:string"/>
+                        <xs:element name="Birthday" type="xs:dateTime"/>
+                        <xs:element name="Email" type="xs:string"/>
+                        <xs:element name="Phone" type="xs:string"/>
+                        <xs:element name="IdentificationTypeRecId" type="xs:long"/>
+                        <xs:element name="IdentificationNumber" type="xs:string"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="CreateRecruitmentApplicantResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting recruitment project job ads</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="RecruitmentApplicant" type="RecruitmentApplicant"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="CreateRecruitmentApplicationRequest">
+        <xs:annotation>
+            <xs:documentation>Request for creating recruitment application</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="ApplicantId" type="xs:string"/>
+                        <xs:element name="ProjectId" type="xs:string"/>
+                        <xs:element name="DataArea" type="xs:string"/>
+                        <xs:element name="CoverLetter" type="xs:string"/>
+                        <xs:element name="RecruitmentJobAdQuestionnaireList" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="RecruitmentJobAdQuestionnaire" type="RecruitmentJobAdQuestionnaire" minOccurs="0" maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="CreateRecruitmentApplicationResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting recruitment project job ads</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="RecruitmentApplication" type="RecruitmentApplication"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="AddDocumentToRecruitmentApplicantRequest">
+        <xs:annotation>
+            <xs:documentation>Request for creating recruitment application</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="ApplicantId" type="xs:string"/>
+                        <xs:element name="Filename" type="xs:string"/>
+                        <xs:element name="FileBinData" type="xs:base64Binary"/>
+                        <xs:element name="Notes" type="xs:string"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="AddDocumentToRecruitmentApplicantResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting recruitment project job ads</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="DocumentId" type="xs:long"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="AddDocumentToRecruitmentApplicationRequest">
+        <xs:annotation>
+            <xs:documentation>Request for creating recruitment application</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="ApplicationId" type="xs:string"/>
+                        <xs:element name="DataArea" type="xs:string"/>
+                        <xs:element name="Filename" type="xs:string"/>
+                        <xs:element name="FileBinData" type="xs:base64Binary"/>
+                        <xs:element name="Notes" type="xs:string"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="AddDocumentToRecruitmentApplicationResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting recruitment project job ads</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="DocumentId" type="xs:long"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="DeleteDocumentFromRecruitmentApplicationRequest">
+        <xs:annotation>
+            <xs:documentation>Request for creating recruitment application</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="DocumentId" type="xs:long"/>
+                        <xs:element name="ApplicationId" type="xs:string"/>
+                        <xs:element name="DataArea" type="xs:string"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="DeleteDocumentFromRecruitmentApplicationResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting recruitment project job ads</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="DeleteDocumentFromRecruitmentApplicantRequest">
+        <xs:annotation>
+            <xs:documentation>Request for creating recruitment application</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="DocumentId" type="xs:long"/>
+                        <xs:element name="ApplicantId" type="xs:string"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="DeleteDocumentFromRecruitmentApplicantResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting recruitment project job ads</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetRecruitmentApplicationDocumentsRequest">
+        <xs:annotation>
+            <xs:documentation>Request for creating recruitment application</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="ApplicationId" type="xs:string"/>
+                        <xs:element name="DataArea" type="xs:string"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetRecruitmentApplicationDocumentsResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting recruitment project job ads</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="RecruitmentDocumentList" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="RecruitmentDocument" type="RecruitmentDocument" minOccurs="0"
+                                                maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetRecruitmentApplicantDocumentsRequest">
+        <xs:annotation>
+            <xs:documentation>Request for creating recruitment application</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="ApplicantId" type="xs:string"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetRecruitmentApplicantDocumentsResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting recruitment project job ads</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="RecruitmentDocumentList" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="RecruitmentDocument" type="RecruitmentDocument" minOccurs="0"
+                                                maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetRecruitmentApplicantInterviewsRequest">
+        <xs:annotation>
+            <xs:documentation>Request for creating recruitment application</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="ApplicantId" type="xs:string"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetRecruitmentApplicantInterviewsResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting recruitment project job ads</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="RecruitmentApplicantInterviewList" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="RecruitmentApplicantInterview" type="RecruitmentApplicantInterview" minOccurs="0"
+                                                maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetRecruitmentApplicantApplicationsRequest">
+        <xs:annotation>
+            <xs:documentation>Request for creating recruitment application</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="ApplicantId" type="xs:string"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetRecruitmentApplicantApplicationsResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting recruitment project job ads</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="RecruitmentApplicationsList" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="RecruitmentApplication" type="RecruitmentApplication" minOccurs="0"
+                                                maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

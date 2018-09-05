@@ -1,0 +1,982 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified" xmlns="http://www.tallink.com/hris/"
+           targetNamespace="http://www.tallink.com/hris/">
+    <xs:include schemaLocation="BaseTypes.xsd"/>
+    <xs:element name="CreateCardForIdentityRequest">
+        <xs:annotation>
+            <xs:documentation>Request for creation new card
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="Card" type="BaseCard"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="CreateCardForIdentityResponse">
+        <xs:annotation>
+            <xs:documentation>Response for creation new card
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="Card" type="Card"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="PrintCardBaseRequest" abstract="true">
+        <xs:complexContent>
+            <xs:extension base="HRISBaseRequest">
+                <xs:sequence>
+                    <xs:element name="CardId" type="xs:integer"/>
+                    <xs:element name="PrinterId" type="xs:int"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="PrintCardWithNameRequest" abstract="true">
+        <xs:complexContent>
+            <xs:extension base="PrintCardBaseRequest">
+                <xs:sequence>
+                    <xs:element name="CompanyName" type="CompanyName" minOccurs="0"/>
+                    <xs:element name="Department" type="xs:string" minOccurs="0"/>
+                    <xs:element name="DepartmentName" type="xs:string" minOccurs="0"/>
+                    <xs:element name="CountryCode" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="PrintCardRequest">
+        <xs:annotation>
+            <xs:documentation>Request for printing card
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="PrintCardWithNameRequest">
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="PrintCardResponse">
+        <xs:annotation>
+            <xs:documentation>Response for printing card
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetCardLogRequest">
+        <xs:annotation>
+            <xs:documentation>Request for getting card log
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="CardId" type="xs:integer"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetCardLogResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting card log data (eg. messages
+                about actions done to specific card)
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="CardLogs" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="CardLog" type="CardLog" minOccurs="0"
+                                                maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetCardFullLogRequest">
+        <xs:annotation>
+            <xs:documentation>Request for getting full card log
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="CardId" type="xs:integer"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetCardFullLogResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting full card log data
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="CardFullLogs" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="CardFullLog" type="CardFullLog" minOccurs="0"
+                                                maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="UpdateCardBlacklistRequest">
+        <xs:annotation>
+            <xs:documentation>Request for updating blacklist date
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="CardBlacklistItemId" type="xs:integer"/>
+                        <xs:element name="FromDate" type="xs:dateTime"/>
+                        <xs:element name="ToDate" type="xs:dateTime" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="UpdateCardBlacklistResponse">
+        <xs:annotation>
+            <xs:documentation>Response for updating blacklist date
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="AddCardToBlacklistRequest">
+        <xs:annotation>
+            <xs:documentation>Request for addition card to blacklist
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="CardId" type="xs:integer"/>
+                        <xs:element name="FromDate" type="xs:dateTime"/>
+                        <xs:element name="ToDate" type="xs:dateTime" minOccurs="0"/>
+                        <xs:element name="CardBlockTypeId" type="xs:integer"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="AddCardToBlacklistResponse">
+        <xs:annotation>
+            <xs:documentation>Response for printing card
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="RemoveCardFromBlacklistRequest">
+        <xs:annotation>
+            <xs:documentation>Request to remove card from blacklist
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="Blacklist" type="CardBlacklistItem"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="RemoveCardFromBlacklistResponse">
+        <xs:annotation>
+            <xs:documentation>Response for printing card
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetCardBlacklistRequest">
+        <xs:annotation>
+            <xs:documentation>Request for getting blacklist for card
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="CardId" type="xs:integer"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetCardBlacklistResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting blacklist for card
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="BlackList" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="BlacklistItem" type="CardBlacklistItem"
+                                                minOccurs="0" maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="CloseCardRequest">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="CardId" type="xs:integer"/>
+                        <xs:element name="CardBlockTypeId" type="xs:integer"/>
+                        <xs:element name="CloseDate" type="xs:dateTime" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="CloseCardResponse">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ReprintCardRequest">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="PrintCardWithNameRequest">
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ReprintCardResponse">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ReissueCardRequest">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="PrintCardWithNameRequest">
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ReissueCardResponse">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ReissueCardDueToNameChangedRequest">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="PrintCardWithNameRequest">
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ReissueCardDueToNameChangedResponse">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="RecreateCardRequest">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="PrintCardBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="CardValidStartDate" type="xs:date"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="RecreateCardResponse">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="Card" type="Card"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetFullCardInfoRequest">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="CardMagnetStripe" minOccurs="0" type="xs:string"/>
+                        <xs:element name="CardBarCode" minOccurs="0" type="xs:string"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetFullCardInfoResponse">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="ImportInfo" type="ImportInfo" minOccurs="0"/>
+                        <xs:element name="FullName" type="xs:string"/>
+                        <xs:element name="CompanyName" type="xs:string"/>
+                        <xs:element name="ValidDate" type="xs:dateTime"/>
+                        <xs:element name="CardHolders" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="CardHolder" type="CardHolder" minOccurs="0" maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetCardsRequest">
+        <xs:annotation>
+            <xs:documentation>Request for getting list of cards
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="Options" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="EnableLikeSearch" type="xs:boolean"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="Card" type="Card" minOccurs="0"
+                                    maxOccurs="1"/>
+                        <xs:element name="ValidDateRange" type="DateRange"
+                                    minOccurs="0" maxOccurs="1"/>
+                        <xs:element name="PrintDateRange" type="DateRange"
+                                    minOccurs="0" maxOccurs="1"/>
+                        <xs:element name="CreateDateRange" type="DateRange"
+                                    minOccurs="0" maxOccurs="1"/>
+                        <xs:element name="Identity" type="IdentityBase" minOccurs="0"
+                                    maxOccurs="1"/>
+                        <xs:element name="SearchIdentityInCardHolders" type="xs:boolean" default="false"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="AddUserNoteToCardRequest">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="CardId" type="xs:integer"/>
+                        <xs:element name="Comment" type="xs:string"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="AddUserNoteToCardResponse">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetCardsResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting cards info
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="Cards" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="Card" type="Card" minOccurs="0"
+                                                maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="AddOrUpdateOscarCardQueueItemRequest">
+        <xs:annotation>
+            <xs:documentation>Request for adding of updating oscar queue data
+                item
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="CardId" type="xs:integer"/>
+                        <xs:element name="CardBlacklistItemId" type="xs:integer"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="AddOrUpdateOscarCardQueueItemResponse">
+        <xs:annotation>
+            <xs:documentation>Response for adding of updating oscar queue data
+                item
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetOscarCardQueueRequest">
+        <xs:annotation>
+            <xs:documentation>Request for getting oscar queue data
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="OscarCardQueueItem" type="OscarCardQueueItem"
+                                    minOccurs="0"/>
+                        <xs:element name="ScheduledDate" type="DateRange"
+                                    minOccurs="0" maxOccurs="1"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetCardTransactionsRequest">
+        <xs:annotation>
+            <xs:documentation>Request for getting card transactions summary info
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="CardNumbers">
+                            <xs:simpleType>
+                                <xs:list itemType="xs:string"/>
+                            </xs:simpleType>
+                        </xs:element>
+                        <xs:element name="TransactionDateRange" type="DateRange"
+                                    minOccurs="1" maxOccurs="1"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetCardTransactionsResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting card transaction summary info
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="CardTransactions"
+                                    minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="CardTransaction" type="CardTransaction"
+                                                minOccurs="0" maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="AddOrEditCardTransactionCommentRequest">
+        <xs:annotation>
+            <xs:documentation>Request for adding or editing transaction comment</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="CompNo" type="xs:integer" nillable="false"/>
+                        <xs:element name="BranchNo" type="xs:integer"/>
+                        <xs:element name="ProfitCenterNo" type="xs:integer"/>
+                        <xs:element name="TerminalNo" type="xs:integer"/>
+                        <xs:element name="ReceiptNo" type="xs:integer"/>
+                        <xs:element name="Date" type="xs:dateTime"/>
+                        <xs:element name="CardNumber" type="xs:string"/>
+                        <xs:element name="IdentityId" type="xs:integer"/>
+                        <xs:element name="CostCenter" type="xs:string" minOccurs="0"/>
+                        <xs:element name="Department" type="xs:string" minOccurs="0"/>
+                        <xs:element name="Account" type="xs:string" minOccurs="0"/>
+                        <xs:element name="BusinessPurpose" type="xs:string" minOccurs="0"/>
+                        <xs:element name="GuestList" type="xs:string" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="AddOrEditCardTransactionCommentResponse">
+        <xs:annotation>
+            <xs:documentation>Response for adding or editing transaction comment
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="CardTransactionComment" type="CardTransactionComment"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetOscarCardQueueResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting cards info
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="OscarCardQueue" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="OscarCardQueueItem" type="OscarCardQueueItem"
+                                                minOccurs="0" maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetCardTransactionSummaryRequest">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="cardNumber" type="xs:string"/>
+                        <xs:element name="dateRange" type="DateRange"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetCardTransactionSummaryResponse">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="totalAmount" type="xs:decimal"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="CreateLimitForCardTypeRequest">
+        <xs:annotation>
+            <xs:documentation>Request for creating a new limit for card type
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="LimitForCardType" type="LimitForCardType"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="CreateLimitForCardTypeResponse">
+        <xs:annotation>
+            <xs:documentation>Response for creating a new limit for card type
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="LimitForCardType" type="LimitForCardType"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="UpdateLimitForCardTypeRequest">
+        <xs:annotation>
+            <xs:documentation>Request for updating a limit for card type
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="LimitForCardType" type="LimitForCardType"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="UpdateLimitForCardTypeResponse">
+        <xs:annotation>
+            <xs:documentation>Response for updating a limit for card type
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="LimitForCardType" type="LimitForCardType"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetLimitsForCardTypesRequest">
+        <xs:annotation>
+            <xs:documentation>Request for getting limits for card types
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="LimitForCardType" type="LimitForCardType"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetLimitsForCardTypesResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting limits for card types
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="LimitsForCardTypes" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="LimitForCardType" type="LimitForCardType" minOccurs="0"
+                                                maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="AddCardHolderRequest">
+        <xs:annotation>
+            <xs:documentation>Request for adding new card holder
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="CardId" type="xs:integer"/>
+                        <xs:element name="IdentityId" type="xs:integer"/>
+                        <xs:element name="Owner" type="xs:boolean" default="false"/>
+                        <xs:element name="ValidFrom" type="xs:dateTime" minOccurs="0"/>
+                        <xs:element name="ValidTo" type="xs:dateTime" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="AddCardHolderResponse">
+        <xs:annotation>
+            <xs:documentation>Response for adding new card holder
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="CardHolder" type="CardHolder"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="UpdateCardHolderRequest">
+        <xs:annotation>
+            <xs:documentation>Request for updating card holder
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="Id" type="xs:integer"/>
+                        <xs:element name="Owner" type="xs:boolean" minOccurs="0"/>
+                        <xs:element name="ValidFrom" type="xs:dateTime" minOccurs="0"/>
+                        <xs:element name="ValidTo" type="xs:dateTime" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="UpdateCardHolderResponse">
+        <xs:annotation>
+            <xs:documentation>Response for updating card holder
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="CardHolder" type="CardHolder"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="SaveOwnerCommentInCardTransactionsRequest">
+        <xs:annotation>
+            <xs:documentation>Request for approving card transactions
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="CardId" type="xs:integer"/>
+                        <xs:element name="Date" type="xs:date"/>
+                        <xs:element name="IdentityId" type="xs:integer"/>
+                        <xs:element name="CardTransactions" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="CardTransaction" type="CardTransaction" minOccurs="0"
+                                                maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="SaveOwnerCommentInCardTransactionsResponse">
+        <xs:annotation>
+            <xs:documentation>Response for approving card transactions
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ApproveCardTransactionsRequest">
+        <xs:annotation>
+            <xs:documentation>Request for approving card transactions
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="CardId" type="xs:integer"/>
+                        <xs:element name="Date" type="xs:date"/>
+                        <xs:element name="IdentityId" type="xs:integer"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ApproveCardTransactionsResponse">
+        <xs:annotation>
+            <xs:documentation>Response for approving card transactions
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="SendCardTransactionsApprovalReportRequest">
+        <xs:annotation>
+            <xs:documentation>Request for approving card transactions
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="CardId" type="xs:integer"/>
+                        <xs:element name="Date" type="xs:date"/>
+                        <xs:element name="SendTo" type="xs:string"/>
+                        <xs:element name="IdentityId" type="xs:integer"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="SendCardTransactionsApprovalReportResponse">
+        <xs:annotation>
+            <xs:documentation>Response for approving card transactions
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="UpdateAccountingEmailRequest">
+        <xs:annotation>
+            <xs:documentation>Request for updating accounting email
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="AccountingEmail" type="AccountingEmail"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="UpdateAccountingEmailResponse">
+        <xs:annotation>
+            <xs:documentation>Response for updating accounting email
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="AccountingEmail" type="AccountingEmail"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="GetAllAccountingEmailsRequest">
+        <xs:annotation>
+            <xs:documentation>Request for getting all accounting emails
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest" />
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetAllAccountingEmailsResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting all accounting emails
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="AccountingEmail" type="AccountingEmail" minOccurs="0"
+                                    maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

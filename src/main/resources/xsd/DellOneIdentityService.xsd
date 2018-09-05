@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified" xmlns="http://www.tallink.com/hris/"
+           targetNamespace="http://www.tallink.com/hris/">
+    <xs:include schemaLocation="BaseTypes.xsd"/>
+
+    <xs:element name="GetUserRolesRequest">
+        <xs:annotation>
+            <xs:documentation>Request for getting user group</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="IdentityId" type="xs:integer"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetUserRolesResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting user group</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="GroupList">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="GroupName" type="xs:string" minOccurs="0"
+                                                maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetUsersByRoleNameRequest">
+        <xs:annotation>
+            <xs:documentation>Request for getting users assigned to specified group</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="Org" type="xs:string"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetUsersByRoleNameResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting users assigned to specified group</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="IdentityList">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="IdentityBasicData" type="IdentityBasicData" minOccurs="0"
+                                                maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="AddUserToRoleRequest">
+        <xs:annotation>
+            <xs:documentation>Request for adding users to specified group</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="IdentityId" type="xs:integer"/>
+                        <xs:element name="Org" type="xs:string"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="AddUserToRoleResponse">
+        <xs:annotation>
+            <xs:documentation>Request for adding users to specified group</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="Added" type="xs:boolean"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="RemoveUserFromRoleRequest">
+        <xs:annotation>
+            <xs:documentation>Request for removing users from specified group</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="IdentityId" type="xs:integer"/>
+                        <xs:element name="Org" type="xs:string"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="RemoveUserFromRoleResponse">
+        <xs:annotation>
+            <xs:documentation>Request for removing users from specified group</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="Removed" type="xs:boolean"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="CreateIDMAccountWithHRISDataRequest">
+        <xs:annotation>
+            <xs:documentation>Request for creating user in IDM</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="IdentityId" type="xs:integer"/>
+                        <xs:element name="TrainerId" type="xs:integer"/>
+                        <xs:element name="SetTemporaryInactive" type="xs:boolean" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="CreateIDMAccountWithHRISDataResponse">
+        <xs:annotation>
+            <xs:documentation>Response for creating user in IDM</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="UpdateIDMAccountWithHRISDataRequest">
+        <xs:annotation>
+            <xs:documentation>Request for creating user in IDM</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="IdentityId" type="xs:integer"/>
+                        <xs:element name="TrainerId" type="xs:integer"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="UpdateIDMAccountWithHRISDataResponse">
+        <xs:annotation>
+            <xs:documentation>Response for creating user in IDM</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="SetIDMAccountActiveRequest">
+        <xs:annotation>
+            <xs:documentation>Request for changing IDM account active field</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="IdentityId" type="xs:integer"/>
+                        <xs:element name="TrainerId" type="xs:integer"/>
+                        <xs:element name="Active" type="xs:boolean"/>
+                        <xs:element name="TemporaryInactive" type="xs:boolean"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="SetIDMAccountActiveResponse">
+        <xs:annotation>
+            <xs:documentation>Response for changing IDM account active field</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetIDMAccountDataRequest">
+        <xs:annotation>
+            <xs:documentation>Request for changing IDM account active field</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="IdentityId" type="xs:integer"/>
+                        <xs:element name="TrainerId" type="xs:integer"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetIDMAccountDataResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting IDM account data</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="UserData" type="IDMUserData"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <tx:annotation-driven/>
+
+    <bean id="transactionManager"
+          class="org.springframework.orm.hibernate4.HibernateTransactionManager"
+          p:sessionFactory-ref="localSessionFactory"/>
+
+    <bean id="ittelDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${ittel.driver.class.name}"/>
+        <property name="url" value="${ittel.database.url}"/>
+        <property name="username" value="${ittel.database.username}"/>
+        <property name="password" value="${ittel.database.password}"/>
+    </bean>
+
+    <bean id="localSessionFactory"
+          class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="ittelDataSource"/>
+        <property name="packagesToScan">
+            <list>
+                <value>com.tallink.ittel.dao</value>
+                <value>com.tallink.ittel.dao.model.domain</value>
+            </list>
+        </property>
+        <property name="annotatedPackages">
+            <list>
+				<value>com.tallink.ittel.dao</value>
+				<value>com.tallink.ittel.dao.model.domain</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.show_sql">${ittel.hibernate.show.sql}</prop>
+<!--
+                <prop key="hibernate.cache.region.factory_class">net.sf.ehcache.hibernate.EhCacheRegionFactory</prop>
+                <prop key="hibernate.cache.use_query_cache">true</prop>
+-->
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.generate_statistics">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">${ittel.hibernate.hbm2ddl.auto}</prop>
+                <prop key="hibernate.dialect">${ittel.hibernate.connection.dialect}</prop>
+            </props>
+        </property>
+    </bean>
+</beans>

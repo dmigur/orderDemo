@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified" xmlns="http://www.tallink.com/hris/"
+           targetNamespace="http://www.tallink.com/hris/">
+    <xs:include schemaLocation="BaseTypes.xsd"/>
+    <xs:element name="IsEmorUserRequest">
+        <xs:annotation>
+            <xs:documentation>Request for checking whether user has emor rights
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:choice>
+                            <xs:element name="IdentityId" type="xs:integer"/>
+                            <xs:element name="Email" type="xs:string"/>
+                        </xs:choice>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="IsEmorUserResponse">
+        <xs:annotation>
+            <xs:documentation>Response for checking whether user has emor rights
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:choice>
+                            <xs:element name="IdentityId" type="xs:integer"/>
+                            <xs:element name="Email" type="xs:string"/>
+                        </xs:choice>
+                        <xs:element name="HasEmorRights" type="xs:boolean"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetEmorLoginRequest">
+        <xs:annotation>
+            <xs:documentation>Request for getting emor login link
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:choice>
+                            <xs:element name="IdentityId" type="xs:integer"/>
+                            <xs:element name="Email" type="xs:string"/>
+                        </xs:choice>
+                        <xs:element name="DashboardType" type="xs:string"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetEmorLoginResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting emor login link
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:choice>
+                            <xs:element name="IdentityId" type="xs:integer"/>
+                            <xs:element name="Email" type="xs:string"/>
+                        </xs:choice>
+                        <xs:element name="EmorLogin" type="xs:string"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetActiveEmorIdentityListRequest">
+        <xs:annotation>
+            <xs:documentation>Request for getting active emor users list
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetActiveEmorIdentityListResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting active emor users list
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="IdentityList">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="Identity" type="IdentityBasicData" minOccurs="0"
+                                                maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

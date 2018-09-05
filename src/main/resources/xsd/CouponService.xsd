@@ -1,0 +1,575 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified" xmlns="http://www.tallink.com/hris/"
+           targetNamespace="http://www.tallink.com/hris/">
+    <xs:include schemaLocation="BaseTypes.xsd"/>
+    <xs:element name="CreateCouponPackRequest">
+        <xs:annotation>
+            <xs:documentation>Creates Coupon pack
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="Description" type="xs:string"/>
+                        <xs:element name="Interval" type="xs:integer"/>
+                        <xs:element name="CouponPackItems">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="CouponPackItem" type="CreateCouponPackItem" minOccurs="0"
+                                                maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="CreateCouponPackResponse">
+        <xs:annotation>
+            <xs:documentation>Response for creating coupon pack
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="CouponPack" type="CouponPack"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetCouponPacksRequest">
+        <xs:annotation>
+            <xs:documentation>Get coupon packs
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="CouponPackId" type="xs:integer" minOccurs="0" maxOccurs="1"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetCouponPacksResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting coupon packs
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="CouponPacks" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="CouponPack" type="CouponPack"
+                                                minOccurs="0" maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetIdentityCouponPacksRequest">
+        <xs:annotation>
+            <xs:documentation>Request for finding CouponPack for identity or all existing
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="IdentityId" type="xs:integer" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetIdentityCouponPacksResponse">
+        <xs:annotation>
+            <xs:documentation>Response for finding CouponPack for identity or all existing
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="IdentityCouponPacks" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="IdentityCouponPack" type="IdentityCouponPack"
+                                                minOccurs="0" maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="CreateIdentityCouponPackRequest">
+        <xs:annotation>
+            <xs:documentation>Request for linking identity with coupon pack
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="CouponPackId" type="xs:integer"/>
+                        <xs:element name="IdentityId" type="xs:integer"/>
+                        <xs:element name="InitialGenDate" type="xs:dateTime"/>
+                        <xs:element name="Active" type="xs:boolean"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="CreateIdentityCouponPackResponse">
+        <xs:annotation>
+            <xs:documentation>Response for linking identity with coupon pack
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="IdentityCouponPack" type="IdentityCouponPack"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetCouponsForIdentityRequest">
+        <xs:annotation>
+            <xs:documentation>Request for getting identity coupons
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="IdentityId" type="xs:integer"/>
+                        <xs:element name="EffectiveDateRange" type="DateRange" minOccurs="0"/>
+                        <xs:element name="VacationDateRange" type="DateRange" minOccurs="0"/>
+                        <xs:element name="ActiveOnly" type="xs:boolean"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetCouponsForIdentityResponse">
+        <xs:annotation>
+            <xs:documentation>Response for getting identity coupons
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="Coupons" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="Coupon" type="Coupon"
+                                                minOccurs="0" maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="CreateCouponsForIdentityRequest">
+        <xs:annotation>
+            <xs:documentation>Generate for identity coupons
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="IdentityId" type="xs:integer"/>
+                        <xs:element name="IdentityCouponPackId" type="xs:integer"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="CreateCouponsForIdentityResponse">
+        <xs:annotation>
+            <xs:documentation>Generate for identity coupons
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="Coupons" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="Coupon" type="Coupon"
+                                                minOccurs="0" maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="ForceGenerateCouponsForIdentityRequest">
+        <xs:annotation>
+            <xs:documentation>Force generation of coupons for identity
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="IdentityCouponPackId" type="xs:integer"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ForceGenerateCouponsForIdentityResponse">
+        <xs:annotation>
+            <xs:documentation>Force generation of coupons for identity
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="DistributeSpecificCouponsRequest">
+        <xs:annotation>
+            <xs:documentation>Distribute Specific Coupons
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="IdentityId" type="xs:integer"/>
+                        <xs:element name="ReceiverName" type="xs:string"/>
+                        <xs:element name="CouponIds">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="CouponId" type="xs:integer" minOccurs="0"
+                                                maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+
+                        <xs:element name="DistributionSource">
+                            <xs:complexType>
+                                <xs:choice>
+                                    <xs:element name="Email" type="EmailDistribution"/>
+                                    <xs:element name="File" type="FileDistribution"/>
+                                    <xs:element name="Printer" type="DirectToPrinter"/>
+                                </xs:choice>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="DistributeSpecificCouponsResponse">
+        <xs:annotation>
+            <xs:documentation>Response for distribution Identity Coupons
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="DistributeCouponsRequest">
+        <xs:annotation>
+            <xs:documentation>Distribute Coupons
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="IdentityId" type="xs:integer"/>
+                        <xs:element name="EffectiveDateRange" type="DateRange" minOccurs="0"/>
+                        <xs:element name="VacationDateRange" type="DateRange" minOccurs="0"/>
+                        <xs:element name="ActiveOnly" type="xs:boolean"/>
+                        <xs:element name="DistributionSource">
+                            <xs:complexType>
+                                <xs:choice>
+                                    <xs:element name="Email" type="EmailDistribution"/>
+                                    <xs:element name="File" type="FileDistribution"/>
+                                    <xs:element name="Printer" type="DirectToPrinter"/>
+                                </xs:choice>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="DistributeCouponsResponse">
+        <xs:annotation>
+            <xs:documentation>Response for distribution Identity Coupons
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetIdentityCouponPackQueueInfoRequest">
+        <xs:annotation>
+            <xs:documentation>Get coupon pack queue info request
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="GenerationDate" type="DateRange" minOccurs="0"/>
+                        <xs:element name="ScheduledDate" type="DateRange" minOccurs="0"/>
+                        <xs:element name="Status" type="IdentityCouponPackQueueStatus" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetIdentityCouponPackQueueInfoResponse">
+        <xs:annotation>
+            <xs:documentation>
+                Get coupon pack queue info response
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="IdentityCouponPackQueueInfo" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="IdentityCouponPackQueueInfoItem"
+                                                type="IdentityCouponPackQueueInfoItem"
+                                                minOccurs="0" maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="DeactivateIdentityCouponPackRequest">
+        <xs:annotation>
+            <xs:documentation>Deactivate Identity Coupon Pack
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="IdentityCouponPackId" type="xs:integer"/>
+                        <xs:element name="ReturnCouponsListToDeactivate" type="xs:boolean"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="DeactivateIdentityCouponPackResponse">
+        <xs:annotation>
+            <xs:documentation>Response for deactivating coupons
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="Coupons" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="Coupon" type="Coupon"
+                                                minOccurs="0" maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetOwnerOfCouponByCouponIdRequest">
+        <xs:annotation>
+            <xs:documentation>Gets owner info of coupon by owner id request
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="CouponId" type="xs:integer"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetOwnerOfCouponByCouponIdResponse">
+        <xs:annotation>
+            <xs:documentation>Gets identity owner info of coupon by owner id response
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="CouponInfo" type="Coupon"/>
+                        <xs:element name="Identity" type="Identity"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetOwnerOfCouponByUserDefinedCouponIdRequest">
+        <xs:annotation>
+            <xs:documentation>Gets owner info of coupon by user defined coupon id request
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="UserDefinedCouponId" type="xs:string"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetOwnerOfCouponByUserDefinedCouponIdResponse">
+        <xs:annotation>
+            <xs:documentation>Gets identity owner info of coupon by user defined coupon id response
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="CouponInfo" type="Coupon"/>
+                        <xs:element name="Identity" type="Identity"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="DeactivateCouponsForIdentityRequest">
+        <xs:annotation>
+            <xs:documentation>Deactivate coupons
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="IdentityId" type="xs:integer"/>
+                        <xs:element name="CouponIdList" type="CouponIdList"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="DeactivateCouponsForIdentityResponse">
+        <xs:annotation>
+            <xs:documentation>Response for deactivating identity coupons
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="UpdatedCoupons" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="Coupon" type="Coupon"
+                                                minOccurs="0" maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="FailedToUpdateCoupons" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="Coupon" type="Coupon"
+                                                minOccurs="0" maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ActivateCouponsForIdentityRequest">
+        <xs:annotation>
+            <xs:documentation>Activate coupons
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseRequest">
+                    <xs:sequence>
+                        <xs:element name="IdentityId" type="xs:integer"/>
+                        <xs:element name="CouponIdList" type="CouponIdList"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ActivateCouponsForIdentityResponse">
+        <xs:annotation>
+            <xs:documentation>Response for activating identity coupons
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="HRISBaseResponse">
+                    <xs:sequence>
+                        <xs:element name="UpdatedCoupons" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="Coupon" type="Coupon"
+                                                minOccurs="0" maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="FailedToUpdateCoupons" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="Coupon" type="Coupon"
+                                                minOccurs="0" maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

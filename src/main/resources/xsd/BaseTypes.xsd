@@ -1,0 +1,1541 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified" xmlns="http://www.tallink.com/hris/"
+           targetNamespace="http://www.tallink.com/hris/">
+    <xs:include schemaLocation="BaseEnums.xsd"/>
+    <xs:complexType name="Error">
+        <xs:sequence>
+            <xs:element name="Message" type="xs:string"/>
+            <xs:element name="Type" type="ErrorType"/>
+            <xs:element name="Code" type="xs:integer"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="CompanyName">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="120"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="CouponPack">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer" minOccurs="0"/>
+            <xs:element name="Description" type="xs:string"/>
+            <xs:element name="Interval" type="xs:integer"/>
+            <xs:element name="CouponPackItems" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="CouponPackItem" type="CouponPackItem" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="CreateCouponPackItem">
+        <xs:sequence>
+            <xs:element name="Quantity" type="xs:integer"/>
+            <xs:element name="CouponTypeId" type="xs:integer"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="CouponPackItem">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer" minOccurs="0"/>
+            <xs:element name="Quantity" type="xs:integer"/>
+            <xs:element name="CouponType" type="CouponType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="CouponType">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer" minOccurs="0"/>
+            <xs:element name="CountryCode" type="CountryCodeEnum" minOccurs="0"/>
+            <xs:element name="SeawareCouponClass" type="xs:string" minOccurs="0"/>
+            <xs:element name="Description" type="xs:string" minOccurs="0"/>
+            <xs:element name="PersonalUseOnly" type="xs:boolean" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="CardTransaction">
+        <xs:sequence>
+            <xs:element name="CardNumber" type="xs:string"/>
+            <xs:element name="Amount" type="xs:float"/>
+            <xs:element name="Designation" type="xs:string"/>
+            <xs:element name="CurrencySymbol" type="xs:string"/>
+            <xs:element name="BranchName" type="xs:string"/>
+            <xs:element name="EurAmount" type="xs:float"/>
+            <xs:element name="Date" type="xs:dateTime"/>
+            <xs:element name="OperatorNo" type="xs:integer"/>
+            <xs:element name="ReceiptNo" type="xs:integer"/>
+            <xs:element name="TerminalNo" type="xs:integer"/>
+            <xs:element name="compNo" type="xs:integer"/>
+            <xs:element name="branchNo" type="xs:integer"/>
+            <xs:element name="Accountable" type="xs:boolean"/>
+            <xs:element name="ProfitCenterNo" type="xs:integer"/>
+            <xs:element name="CardTransactionComment" type="CardTransactionComment" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="CardTransactionComment">
+        <xs:sequence>
+            <xs:element name="CostCenter" type="xs:string"/>
+            <xs:element name="Department" type="xs:string"/>
+            <xs:element name="Account" type="xs:string"/>
+            <xs:element name="BusinessPurpose" type="xs:string" minOccurs="1"/>
+            <xs:element name="GuestList" type="xs:string" minOccurs="1"/>
+            <xs:element name="IdentityId" type="xs:integer"/>
+            <xs:element name="IdentityFirstName" type="xs:string"/>
+            <xs:element name="IdentityLastName" type="xs:string"/>
+            <xs:element name="ApprovedByIdentity" type="xs:integer" minOccurs="0"/>
+            <xs:element name="ApprovalDate" type="xs:date" minOccurs="0"/>
+            <xs:element name="OwnerComment" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="HRISBaseRequest" abstract="true">
+        <xs:sequence>
+            <xs:element name="Authentication">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="SecurityToken" type="xs:string"/>
+                        <xs:element name="UserName" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="HRISBaseResponse" abstract="true">
+        <xs:sequence>
+            <xs:element name="Errors" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                        <xs:element name="Error" type="Error"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Printer">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer" minOccurs="0"/>
+            <xs:element name="Ip" type="xs:string"/>
+            <xs:element name="CountryCode" type="CountryCodeEnum"/>
+            <xs:element name="Type" type="PrinterTypeEnum"/>
+            <xs:element name="Description" type="xs:string" minOccurs="0"/>
+            <xs:element name="PrinterBrandType" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="DateRange">
+        <xs:sequence>
+            <xs:element name="From" type="xs:dateTime"/>
+            <xs:element name="To" type="xs:dateTime"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="IdentityContactInfo">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer" minOccurs="0"/>
+            <xs:element name="Address" type="xs:string" minOccurs="0"/>
+            <xs:element name="Phone" type="xs:string" minOccurs="0"/>
+            <xs:element name="CellPhone" type="xs:string" minOccurs="0"/>
+            <xs:element name="ShortPhone" type="xs:string" minOccurs="0"/>
+            <xs:element name="E-mail" type="xs:string" minOccurs="0"/>
+            <xs:element name="ContactType" type="IdentityContactInfoType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="HRSystemReference">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer" minOccurs="0"/>
+            <xs:element name="EmployeeID" type="xs:string"/>
+            <xs:element name="HRSystemType" type="HRSystemTypeEnum"/>
+            <xs:element name="Status" type="HRSystemReferenceStatus" default="ACTIVE"/>
+            <xs:element name="CompanyCode" type="xs:string" minOccurs="0"/>
+            <xs:element name="EmplStartDate" type="xs:dateTime" minOccurs="0"/>
+            <xs:element name="EmplEndDate" type="xs:dateTime" minOccurs="0"/>
+            <xs:element name="EmplRecId" type="xs:string"/>
+            <xs:element name="ContractId" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="CardFullLog">
+        <xs:sequence>
+            <xs:element name="LogDate" type="xs:dateTime"/>
+            <xs:element name="ActionLogged" type="xs:string"/>
+            <xs:element name="Message" type="xs:string"/>
+            <xs:element name="Blacklist" type="CardBlacklistItem"/>
+            <xs:element name="LogItem" type="CardLog"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="CardLog">
+        <xs:sequence>
+            <xs:element name="Message" type="xs:string"/>
+            <xs:element name="LogDate" type="xs:dateTime"/>
+            <xs:element name="CardId" type="xs:integer"/>
+            <xs:element name="Username" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ImportInfo">
+        <xs:sequence>
+            <xs:element name="ImportDate" type="xs:dateTime"/>
+            <xs:element name="ImportAction" type="CardQueueActionEnum"/>
+            <xs:element name="BlockType" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="CardType">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:short" minOccurs="0"/>
+            <xs:element name="Name" type="xs:string"/>
+            <xs:element name="Number" type="xs:integer"/>
+            <xs:element name="Limit" type="xs:decimal"/>
+            <xs:element name="ImageName" type="xs:string"/>
+            <xs:element name="Period" type="xs:integer"/>
+            <xs:element name="IsNewLayout" type="xs:boolean"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="LimitForCardType">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer" minOccurs="1"/>
+            <xs:element name="CountryCode" type="CountryCodeEnum" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="CardTypeId" type="xs:integer" maxOccurs="1"/>
+            <xs:element name="PeriodInMonths" type="xs:integer" minOccurs="1"/>
+            <xs:element name="Limit" type="xs:decimal" minOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="BaseCard">
+        <xs:sequence>
+            <xs:element name="CardTypeId" type="xs:string" minOccurs="0"
+                        maxOccurs="1"/>
+            <xs:element name="CountryCode" type="CountryCodeEnum"
+                        minOccurs="0" maxOccurs="1"/>
+            <xs:element name="IdentityId" type="xs:integer" minOccurs="0"
+                        maxOccurs="1"/>
+            <xs:element name="HRSystemReference" type="HRSystemReference"
+                        minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="CardHolder">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer" minOccurs="0"/>
+            <xs:element name="CardId" type="xs:integer"/>
+            <xs:element name="IdentityId" type="xs:integer"/>
+            <xs:element name="Owner" type="xs:boolean" default="false"/>
+            <xs:element name="ValidFrom" type="xs:dateTime" minOccurs="0"/>
+            <xs:element name="ValidTo" type="xs:dateTime" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="CardInfo">
+        <xs:sequence>
+            <xs:element name="Blacklist">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Status" type="OscarCardStatus"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Employee">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="FirstName" type="xs:string"/>
+                        <xs:element name="LastName" type="xs:string"/>
+                        <xs:sequence>
+                            <xs:element name="Status" type="OscarCardStatus"/>
+                        </xs:sequence>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="UserNote">
+        <xs:sequence>
+            <xs:element name="UserName" type="xs:string"/>
+            <xs:element name="Date" type="xs:dateTime"/>
+            <xs:element name="Comment" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Card">
+        <xs:complexContent>
+            <xs:extension base="BaseCard">
+                <xs:sequence>
+                    <xs:element name="Id" type="xs:integer" minOccurs="0"/>
+                    <xs:element name="CardNumber" type="xs:string"
+                                minOccurs="0"/>
+                    <xs:element name="CardName" type="xs:string" minOccurs="0"/>
+                    <xs:element name="Active" type="xs:boolean" default="true"/>
+                    <xs:element name="CompanyCard" type="xs:boolean"/>
+                    <xs:element name="CreateDate" type="xs:dateTime"
+                                minOccurs="0"/>
+                    <xs:element name="LastUpdateDate" type="xs:dateTime"
+                                minOccurs="0"/>
+                    <xs:element name="PhysicalCards" minOccurs="0">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="PhysicalCard" type="PhysicalCard"
+                                            minOccurs="0" maxOccurs="unbounded"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="UserNotes" minOccurs="0">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="UserNote" type="UserNote" minOccurs="0" maxOccurs="unbounded"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="Blacklist" minOccurs="0">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="BlacklistItem" type="CardBlacklistItem"
+                                            minOccurs="0" maxOccurs="unbounded"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="CardHolders" minOccurs="0">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="CardHolder" type="CardHolder"
+                                            minOccurs="0" maxOccurs="unbounded"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="PhysicalCard">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer" minOccurs="0"/>
+            <xs:element name="ValidDate" type="xs:date" minOccurs="0"/>
+            <xs:element name="PrintDate" type="xs:dateTime" minOccurs="0"/>
+            <xs:element name="Status" type="CardStatus" minOccurs="0"/>
+            <xs:element name="CompanyName" type="xs:string" minOccurs="0"/>
+            <xs:element name="Department" type="xs:string" minOccurs="0"/>
+            <xs:element name="DepartmentName" type="xs:string" minOccurs="0"/>
+            <xs:element name="IsNewLayout" type="xs:boolean" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="IdentityBase">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer" minOccurs="0"/>
+            <xs:element name="Active" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="CreateDate" type="xs:dateTime"
+                        minOccurs="0"/>
+            <xs:element name="LastUpdate" type="xs:dateTime"
+                        minOccurs="0"/>
+            <xs:element name="HRSystemReferences" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="HRSystemReference" type="HRSystemReference"
+                                    minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="IdentityContactInfoList" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="IdentityContactInfo" type="IdentityContactInfo" minOccurs="0"
+                                    maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Picture" type="xs:base64Binary" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Identity">
+        <xs:complexContent>
+            <xs:extension base="IdentityBase">
+                <xs:sequence>
+                    <xs:element name="PersonId" type="xs:integer" minOccurs="0"/>
+                    <xs:element name="FirstName" type="FirstName" minOccurs="0"/>
+                    <xs:element name="LastName" type="LastName" minOccurs="0"/>
+                    <xs:element name="ShortFirstName" type="ShortFirstName" minOccurs="0"/>
+                    <xs:element name="ShortLastName" type="ShortLastName" minOccurs="0"/>
+                    <xs:element name="Gender" type="Gender" minOccurs="0"/>
+                    <xs:element name="BirthDate" type="xs:date" minOccurs="0"/>
+                    <xs:element name="SeawareClientId" type="xs:integer" minOccurs="0"/>
+                    <xs:element name="PersonalId" type="PersonalCode" minOccurs="0"/>
+                    <xs:element name="Citizenship" type="CitizenshipEnum" minOccurs="0"/>
+                    <xs:element name="FirstLanguage" type="LanguageEnum" minOccurs="0"/>
+                    <xs:element name="JobDescription" type="xs:string" minOccurs="0"/>
+                    <xs:element name="CumulativeContractStatus" type="xs:string" minOccurs="0"/>
+                    <xs:element name="Positions" minOccurs="0">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="IdentitySearchPosition" type="IdentityPosition" minOccurs="0"
+                                            maxOccurs="unbounded"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="IdentityUnperson">
+        <xs:complexContent>
+            <xs:extension base="IdentityBase">
+                <xs:sequence>
+                    <xs:element name="UnpersonId" type="xs:integer" minOccurs="0"/>
+                    <xs:element name="Name" type="UnpersonName" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:simpleType name="FirstName">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="45"/>
+            <xs:whiteSpace value="collapse"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="LastName">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="45"/>
+            <xs:whiteSpace value="collapse"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ShortFirstName">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="20"/>
+            <xs:whiteSpace value="collapse"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ShortLastName">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="20"/>
+            <xs:whiteSpace value="collapse"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="UnpersonName">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="100"/>
+            <xs:whiteSpace value="collapse"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="PersonalCode">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="11"/>
+            <xs:maxLength value="11"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="CardBlockType">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer" minOccurs="0"/>
+            <xs:element name="Name" type="xs:string"/>
+            <xs:element name="ExternalTypeId" type="xs:integer"/>
+            <xs:element name="Period" type="xs:integer"/>
+            <xs:element name="ManuallyAllowed" type="xs:boolean"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="StaffCouponType">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer"/>
+            <xs:element name="Country" type="CountryCodeEnum"/>
+            <xs:element name="SeawareCouponCode" type="xs:string"/>
+            <xs:element name="Description" type="xs:string"/>
+            <xs:element name="PersonalUseOnly" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="CardBlacklistItem">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer" minOccurs="0"/>
+            <xs:element name="CardId" type="xs:integer" minOccurs="0"/>
+            <xs:element name="FromDate" type="xs:dateTime" minOccurs="0"/>
+            <xs:element name="ToDate" type="xs:dateTime" minOccurs="0"/>
+            <xs:element name="CardBlockTypeId" type="xs:integer"
+                        minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="OscarCardQueueItem">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer" minOccurs="0"/>
+            <xs:element name="Action" type="CardQueueActionEnum"
+                        minOccurs="0"/>
+            <xs:element name="ImportedDate" type="xs:dateTime"
+                        minOccurs="0"/>
+            <xs:element name="ScheduledDate" type="xs:dateTime"
+                        minOccurs="0"/>
+            <xs:element name="Imported" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="Card" type="Card" minOccurs="0"/>
+            <xs:element name="BlacklistItem" type="CardBlacklistItem"
+                        minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="IdentityCouponPack">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer" minOccurs="0"/>
+            <xs:element name="CouponPackId" type="xs:integer"/>
+            <xs:element name="IdentityId" type="xs:integer"/>
+            <xs:element name="InitialGenDate" type="xs:dateTime"/>
+            <xs:element name="Active" type="xs:boolean"/>
+            <xs:element name="LastGenerationDate" type="xs:dateTime" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="IdentityCouponPackQueueInfoItem">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer"/>
+            <xs:element name="IdentityId" type="xs:integer"/>
+            <xs:element name="FirstName" type="xs:string"/>
+            <xs:element name="LastName" type="xs:string"/>
+            <xs:element name="CouponPack" type="CouponPack"/>
+            <xs:element name="InitialGenDate" type="xs:dateTime"/>
+            <xs:element name="Active" type="xs:boolean"/>
+            <xs:element name="LastGenerationDate" type="xs:dateTime" minOccurs="0"/>
+            <xs:element name="GenerationDate" type="xs:dateTime" minOccurs="0"/>
+            <xs:element name="ScheduledDate" type="xs:dateTime"/>
+            <xs:element name="Status" type="IdentityCouponPackQueueStatus"/>
+            <xs:element name="Message" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="HrisLog">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer"/>
+            <xs:element name="UserName" type="xs:string" minOccurs="0"/>
+            <xs:element name="TimeStamp" type="xs:dateTime"/>
+            <xs:element name="Method" type="xs:string"/>
+            <xs:element name="SecurityToken" type="SecurityToken"/>
+            <xs:element name="Status" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="SecurityToken">
+        <xs:sequence>
+            <xs:element name="ApplicationName" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Coupon">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer"/>
+            <xs:element name="UserDefinedCouponId" type="xs:string"/>
+            <xs:element name="VacationRange" type="DateRange" minOccurs="0"/>
+            <xs:element name="ApplicabilityRange" type="DateRange"/>
+            <xs:element name="Active" type="xs:boolean"/>
+            <xs:element name="Used" type="xs:boolean"/>
+            <xs:element name="SentTo" type="xs:string" minOccurs="0"/>
+            <xs:element name="CouponClass" type="xs:string"/>
+            <xs:element name="Description" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="EmailDistribution">
+        <xs:list itemType="EmailAddress"/>
+    </xs:simpleType>
+    <xs:complexType name="FileDistribution"/>
+    <xs:complexType name="DirectToPrinter">
+        <xs:sequence>
+            <xs:element name="PrinterId" type="xs:integer"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="CouponIdList">
+        <xs:list itemType="xs:int"/>
+    </xs:simpleType>
+    <xs:simpleType name="EmailAddress">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="Trainer">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer" minOccurs="0"/>
+            <xs:element name="Active" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="IdentityOverview" type="IdentityOverview" minOccurs="0"/>
+            <xs:element name="OfficeCode" type="OfficeCode" minOccurs="0"/>
+            <xs:element name="TrainerCompany" type="TrainerCompany" minOccurs="0"/>
+            <xs:element name="TrainerContact" type="TrainerContact" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TrainerCompany">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer" minOccurs="0"/>
+            <xs:element name="Company" type="xs:string" minOccurs="0"/>
+            <xs:element name="AddressOne" type="xs:string" minOccurs="0"/>
+            <xs:element name="AddressTwo" type="xs:string" minOccurs="0"/>
+            <xs:element name="Zipcode" type="xs:string" minOccurs="0"/>
+            <xs:element name="City" type="xs:string" minOccurs="0"/>
+            <xs:element name="Country" type="xs:string" minOccurs="0"/>
+            <xs:element name="Phone" type="xs:string" minOccurs="0"/>
+            <xs:element name="Email" type="EmailAddress" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TrainerCompanyOverview">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer" minOccurs="0"/>
+            <xs:element name="Company" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TrainerContact">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer" minOccurs="0"/>
+            <xs:element name="FirstName" type="xs:string" minOccurs="0"/>
+            <xs:element name="LastName" type="xs:string" minOccurs="0"/>
+            <xs:element name="Birthdate" type="xs:date" minOccurs="0"/>
+            <xs:element name="Phone" type="xs:string" minOccurs="0"/>
+            <xs:element name="Email" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TrainerContactOverview">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer" minOccurs="0"/>
+            <xs:element name="FirstName" type="xs:string" minOccurs="0"/>
+            <xs:element name="LastName" type="xs:string" minOccurs="0"/>
+            <xs:element name="Birthdate" type="xs:date" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="OfficeCode">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer" minOccurs="0"/>
+            <xs:element name="Name" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ParticipantStatus">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer" minOccurs="0"/>
+            <xs:element name="Name" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="CourseStatus">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer" minOccurs="0"/>
+            <xs:element name="Name" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="CertificateOverview">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer" minOccurs="0"/>
+            <xs:element name="Name" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Certificate">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer" minOccurs="0"/>
+            <xs:element name="Name" type="xs:string" minOccurs="0"/>
+            <xs:element name="Description" type="xs:string" minOccurs="0"/>
+            <xs:element name="Expiring" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="ValidityInDays" type="xs:integer" minOccurs="0"/>
+            <xs:element name="ValidTo" type="xs:date" minOccurs="0"/>
+            <xs:element name="Active" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="NumberEntryRequired" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="FocusArea" type="FocusArea" minOccurs="0"/>
+            <xs:element name="PrerequisiteCertificates" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="PrerequisiteCertificate" type="xs:integer" minOccurs="0"
+                                    maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="TrainingCourseOverview">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer" minOccurs="0"/>
+            <xs:element name="ModuleName" type="xs:string" minOccurs="0"/>
+            <xs:element name="FocusArea" type="xs:string" minOccurs="0"/>
+            <xs:element name="OfficeCode" type="xs:string" minOccurs="0"/>
+            <xs:element name="CourseStatus" type="xs:string" minOccurs="0"/>
+            <xs:element name="MaximumParticipants" type="xs:integer" minOccurs="0"/>
+            <xs:element name="CurrentParticipants" type="xs:integer" minOccurs="0"/>
+            <xs:element name="IntranetAllowed" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="RegistrationAllowed" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="CourseOwner" type="xs:string" minOccurs="0"/>
+            <xs:element name="TrainingCourseSessions" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="TrainingCourseSession" type="TrainingCourseSessionOverview" minOccurs="0"
+                                    maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TrainingCourseSessionOverview">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer"/>
+            <xs:element name="StartTime" type="xs:dateTime"/>
+            <xs:element name="EndTime" type="xs:dateTime"/>
+            <xs:element name="Location" type="xs:string"/>
+            <xs:element name="Trainer" type="xs:string"/>
+            <xs:element name="SessionType" type="xs:string"/>
+            <xs:element name="CourseId" type="xs:integer"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="TrainingCourse">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer" minOccurs="0"/>
+            <xs:element name="Status" type="CourseStatus" minOccurs="0"/>
+            <xs:element name="Audience" type="xs:string" minOccurs="0"/>
+            <xs:element name="CourseTargetGroup" type="xs:string" minOccurs="0"/>
+            <xs:element name="AudienceRegistrationAllowed" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="IntranetAllowed" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="LengthInMinutes" type="xs:integer" minOccurs="0"/>
+            <xs:element name="MaximumParticipants" type="xs:integer" minOccurs="0"/>
+            <xs:element name="CurrentParticipants" type="xs:integer" minOccurs="0"/>
+            <xs:element name="EmployeeRegistration" type="DateRange" minOccurs="0"/>
+            <xs:element name="ManagerRegistrationEnd" type="xs:dateTime" minOccurs="0"/>
+            <xs:element name="ApprovalChecklist" type="xs:string" minOccurs="0"/>
+            <xs:element name="OfficeCode" type="OfficeCode" minOccurs="0"/>
+            <xs:element name="TrainingCourseOrganizer" type="TrainingCourseOrganizer" minOccurs="0"/>
+            <xs:element name="TrainingModule" type="TrainingModule" minOccurs="0"/>
+            <xs:element name="CourseOwner" type="IdentityBasicData" minOccurs="0"/>
+            <xs:element name="AccommodationAllowed" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="TrainerAlreadyEmailed" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="ManagerConfirmationMailAllowed" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="CostItems" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="CostItem" type="CostItem" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="TrainingCourseSessions" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="TrainingCourseSession" type="TrainingCourseSession" minOccurs="0"
+                                    maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TrainingCourseOrganizer">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer"/>
+            <xs:element name="Name" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TrainingLearndashCourse">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer" minOccurs="0"/>
+            <xs:element name="Title" type="xs:string" minOccurs="0"/>
+            <xs:element name="Content" type="xs:string" minOccurs="0"/>
+            <xs:element name="Link" type="xs:string" minOccurs="0"/>
+            <xs:element name="LearndashId" type="xs:integer" minOccurs="0"/>
+            <xs:element name="Active" type="xs:boolean" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Participant">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer" minOccurs="0"/>
+            <xs:element name="TrainingCourse" type="TrainingCourse" minOccurs="0"/>
+            <xs:element name="HRSystemReference" type="HRSystemReference" minOccurs="0"/>
+            <xs:element name="IdentityOverview" type="IdentityOverview" minOccurs="0"/>
+            <xs:element name="Active" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="Status" type="ParticipantStatus" minOccurs="0"/>
+            <xs:element name="AccommodationRequired" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="AccommodationStart" type="xs:dateTime" minOccurs="0"/>
+            <xs:element name="AccommodationEnd" type="xs:dateTime" minOccurs="0"/>
+            <xs:element name="Comment" type="xs:string" minOccurs="0"/>
+            <xs:element name="EvaluationComment" type="xs:string" minOccurs="0"/>
+            <xs:element name="Department" type="xs:string" minOccurs="0"/>
+            <xs:element name="AlreadyEmailed" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="EmployeeCertificates" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="EmployeeCertificate" type="EmployeeCertificate" minOccurs="0"
+                                    maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="InSessions" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="InSession" type="InSession" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Accommodations" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Accommodation" type="ParticipantAccommodation" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="InSession">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer" minOccurs="0"/>
+            <xs:element name="ParticipantId" type="xs:integer" minOccurs="0"/>
+            <xs:element name="TrainingCourseSession" type="TrainingCourseSession" minOccurs="0"/>
+            <xs:element name="TrainingCourseSessionActive" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="Active" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="Participated" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="Passed" type="xs:boolean" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ParticipantAccommodation">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer" minOccurs="0"/>
+            <xs:element name="ParticipantId" type="xs:integer" minOccurs="0"/>
+            <xs:element name="TrainingCourseSession" type="TrainingCourseSession" minOccurs="0"/>
+            <xs:element name="AccommodationRequired" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="AccommodationStart" type="xs:dateTime" minOccurs="0"/>
+            <xs:element name="AccommodationEnd" type="xs:dateTime" minOccurs="0"/>
+            <xs:element name="Comment" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ParticipantOverview">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer" minOccurs="0"/>
+            <xs:element name="TrainingCourse" type="TrainingCourse" minOccurs="0"/>
+            <xs:element name="HRSystemReference" type="HRSystemReference" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="EmployeeCertificate">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer" minOccurs="0"/>
+            <xs:element name="Participant" type="ParticipantOverview" minOccurs="0"/>
+            <xs:element name="Certificate" type="Certificate" minOccurs="0"/>
+            <xs:element name="Identity" type="IdentityOverview" minOccurs="0"/>
+            <xs:element name="DateOfAcquisition" type="xs:date" minOccurs="0"/>
+            <xs:element name="Valid" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="Grade" type="xs:float" minOccurs="0"/>
+            <xs:element name="CertificateNumber" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="CostType">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer" minOccurs="0"/>
+            <xs:element name="Name" type="xs:string" minOccurs="0"/>
+            <xs:element name="AccountNumber" type="xs:string" minOccurs="0"/>
+            <xs:element name="OfficeCode" type="OfficeCode" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="CostItem">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer" minOccurs="0"/>
+            <xs:element name="Valid" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="Description" type="xs:string" minOccurs="0"/>
+            <xs:element name="Currency" type="xs:string" minOccurs="0"/>
+            <xs:element name="Amount" type="xs:float" minOccurs="0"/>
+            <xs:element name="CostType" type="CostType" minOccurs="0"/>
+            <xs:element name="TrainingCourseId" type="xs:integer" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="IdentityOverview">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer" minOccurs="0"/>
+            <xs:element name="Active" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="FirstName" type="FirstName" minOccurs="0"/>
+            <xs:element name="LastName" type="LastName" minOccurs="0"/>
+            <xs:element name="BirthDate" type="xs:date" minOccurs="0"/>
+            <xs:element name="LegalEntity" type="xs:string" minOccurs="0"/>
+            <xs:element name="BusinessUnit" type="xs:string" minOccurs="0"/>
+            <xs:element name="Department" type="xs:string" minOccurs="0"/>
+            <xs:element name="IdentityContactInfoList" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="IdentityContactInfo" type="IdentityContactInfo" minOccurs="0"
+                                    maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TrainerWithIdentityId">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer" minOccurs="0"/>
+            <xs:element name="Active" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="IdentityId" type="xs:integer" minOccurs="0"/>
+            <xs:element name="OfficeCode" type="OfficeCode" minOccurs="0"/>
+            <xs:element name="TrainerCompany" type="TrainerCompany" minOccurs="0"/>
+            <xs:element name="TrainerContact" type="TrainerContact" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Company">
+        <xs:sequence>
+            <xs:element name="CompanyCode" type="xs:string" minOccurs="0"/>
+            <xs:element name="CompanyFullName" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ModuleContent">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer" minOccurs="0"/>
+            <xs:element name="Active" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="TrainingModuleId" type="xs:integer" minOccurs="0"/>
+            <xs:element name="ContentTitle" type="xs:string" minOccurs="0"/>
+            <xs:element name="ContentLengthInMinutes" type="xs:integer" minOccurs="0"/>
+            <xs:element name="ContentDescription" type="xs:string" minOccurs="0"/>
+            <xs:element name="SequenceNumber" type="xs:integer" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="FocusArea">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer" minOccurs="0"/>
+            <xs:element name="Name" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ModuleAttachment">
+        <xs:sequence>
+            <xs:element name="Name" type="xs:string" minOccurs="0"/>
+            <xs:element name="FilePath" type="xs:string" minOccurs="0"/>
+            <xs:element name="CreateDate" type="xs:dateTime" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ModuleMaterial">
+        <xs:sequence>
+            <xs:element name="Link" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TrainingModule">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer" minOccurs="0"/>
+            <xs:element name="Active" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="Name" type="xs:string" minOccurs="0"/>
+            <xs:element name="Description" type="xs:string" minOccurs="0"/>
+            <xs:element name="TargetGroup" type="xs:string" minOccurs="0"/>
+            <xs:element name="FocusArea" type="FocusArea" minOccurs="0"/>
+            <xs:element name="Objective" type="xs:string" minOccurs="0"/>
+            <xs:element name="ExamRequired" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="Evaluation" type="xs:string" minOccurs="0"/>
+            <xs:element name="Prerequisites" type="xs:string" minOccurs="0"/>
+            <xs:element name="Approved" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="ApprovalProtocol" type="xs:string" minOccurs="0"/>
+            <xs:element name="CertificateRequired" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="CreateDate" type="xs:dateTime" minOccurs="0"/>
+            <xs:element name="UpdateDate" type="xs:dateTime" minOccurs="0"/>
+            <xs:element name="OfficeCodes" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="OfficeCode" type="OfficeCode" minOccurs="0"
+                                    maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ModuleContents" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="ModuleContent" type="ModuleContent" minOccurs="0"
+                                    maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Certificate" type="Certificate" minOccurs="0"/>
+            <xs:element name="Attachments" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Attachment" type="ModuleAttachment" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Materials" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="ModuleMaterial" type="ModuleMaterial" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TrainingCourseSession">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer" minOccurs="0"/>
+            <xs:element name="TrainingCourseId" type="xs:integer" minOccurs="0"/>
+            <xs:element name="StartTime" type="xs:dateTime" minOccurs="0"/>
+            <xs:element name="EndTime" type="xs:dateTime" minOccurs="0"/>
+            <xs:element name="Location" type="xs:string" minOccurs="0"/>
+            <xs:element name="SessionNotes" type="xs:string" minOccurs="0"/>
+            <xs:element name="Trainer" type="Trainer" minOccurs="0"/>
+            <xs:element name="AdditionalTrainer" type="Trainer" minOccurs="0"/>
+            <xs:element name="SessionLengthInMinutes" type="xs:integer" minOccurs="0"/>
+            <xs:element name="BreakInMinutes" type="xs:integer" minOccurs="0"/>
+            <xs:element name="TotalTrainingTimeInMinutes" type="xs:integer" minOccurs="0"/>
+            <xs:element name="TaxRefundable" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="SessionType" type="CourseSessionType" minOccurs="0"/>
+            <xs:element name="Language" type="LanguageEnum" minOccurs="0"/>
+            <xs:element name="SequenceNumber" type="xs:integer" minOccurs="0"/>
+            <xs:element name="LearndashCourse" type="TrainingLearndashCourse" minOccurs="0"/>
+            <xs:element name="ModuleContents" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="ModuleContent" type="ModuleContent" minOccurs="0"
+                                    maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="IdentitySearchResult">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer"/>
+            <xs:element name="FirstName" type="xs:string"/>
+            <xs:element name="LastName" type="xs:string"/>
+            <xs:element name="Person" type="xs:boolean"/>
+            <xs:element name="Birthdate" type="xs:string"/>
+            <xs:element name="PersonalContact" type="IdentitySearchContactInfo"/>
+            <xs:element name="CompanyContact" type="IdentitySearchContactInfo"/>
+            <xs:element name="JobDescription" type="xs:string"/>
+            <xs:element name="Picture" type="xs:base64Binary"/>
+            <xs:element name="HRSystemReferences">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="HRSystemReference" type="IdentitySearchSystemReference" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Positions" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Position" type="IdentityPosition" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Teams">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Team" type="IdentitySearchTeam" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="IdentitySearchSystemReference">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer"/>
+            <xs:element name="Status" type="xs:string"/>
+            <xs:element name="EmployeeId" type="xs:string"/>
+            <xs:element name="CompanyCode" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="IdentitySearchTeam">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:string"/>
+            <xs:element name="Name" type="xs:string"/>
+            <xs:element name="ParentId" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="IdentitySearchContactInfo">
+        <xs:sequence>
+            <xs:element name="Email" type="xs:string"/>
+            <xs:element name="Phone" type="xs:string"/>
+            <xs:element name="CellPhone" type="xs:string"/>
+            <xs:element name="ShortPhone" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="IdentityPosition">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:string"/>
+            <xs:element name="Code" type="xs:string"/>
+            <xs:element name="Description" type="xs:string"/>
+            <xs:element name="DescriptionEng" type="xs:string"/>
+            <xs:element name="PositionId" type="xs:string"/>
+            <xs:element name="Primary" type="xs:boolean"/>
+            <xs:element name="ADGroups" type="xs:string"/>
+            <xs:element name="ReportsToIdentityIdList" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="ReportsToIdentityId" type="xs:integer" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="OperatingUnits" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="OperatingUnit" type="OperatingUnit" minOccurs="0"
+                                    maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="PositionContactList" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="PositionContact" type="PositionContact" minOccurs="0"
+                                    maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="PBXDevice">
+        <xs:sequence>
+            <xs:element name="HW" type="xs:string" minOccurs="1"/>
+            <xs:element name="Text" type="xs:string" minOccurs="0"/>
+            <xs:element name="Admin" type="xs:boolean" default="false"/>
+            <xs:element name="Tls" type="xs:boolean" default="false"/>
+            <xs:element name="No-mob" type="xs:boolean" default="false"/>
+            <xs:element name="No-filter" type="xs:boolean" default="false"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="PBXGroup">
+        <xs:annotation>
+            <xs:documentation>
+                Dyn valid values: in,out,(empty); Mode valid values: active, (empty);
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Name" type="xs:string" minOccurs="1"/>
+            <xs:element name="Mode" type="xs:string" minOccurs="0"/>
+            <xs:element name="Dyn" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="PBXUserInfo">
+        <xs:annotation>
+            <xs:documentation>
+                Guid - is read only
+                IdentityId - HRIS Identity Id;
+                Cn - Common name of the user;
+                Dn - Display Name;
+                H323 - Alias the user is registered with;
+                Loc - location the object is homed in. PBX parameter on web interface;
+                E164 - Extension number the user is registered with;
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="IdentityId" type="xs:integer"/>
+            <xs:element name="Guid" type="xs:string"/>
+            <xs:element name="Cn" type="xs:string"/>
+            <xs:element name="Dn" type="xs:string"/>
+            <xs:element name="H323" type="xs:string"/>
+            <xs:element name="Loc" type="xs:string"/>
+            <xs:element name="E164" type="xs:string"/>
+            <xs:element name="Password" type="xs:string"/>
+            <xs:element name="Devices" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Device" type="PBXDevice" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Groups" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Group" type="PBXGroup" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="OperatingUnit">
+        <xs:sequence>
+            <xs:element name="OperatingUnitNumber" type="xs:string" minOccurs="0"/>
+            <xs:element name="OperatingUnitName" type="xs:string" minOccurs="0"/>
+            <xs:element name="OperatingUnitType" type="OperatingUnitTypeEnum" minOccurs="0"/>
+            <xs:element name="CountryCode" type="CountryCodeEnum" minOccurs="0"/>
+            <xs:element name="ReportsTo" type="xs:string" minOccurs="0"/>
+            <xs:element name="Location" type="xs:string" minOccurs="0"/>
+            <xs:element name="PositionManagerId" type="xs:string" minOccurs="0"/>
+            <xs:element name="PositionManagerName" type="xs:string" minOccurs="0"/>
+            <xs:element name="PositionReportManagerId" type="xs:string" minOccurs="0"/>
+            <xs:element name="PositionReportManagerName" type="xs:string" minOccurs="0"/>
+            <xs:element name="Memo" type="xs:string" minOccurs="0"/>
+            <xs:element name="OperatingUnitContactList" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="OperatinUnitContact" type="OperatingUnitContact" minOccurs="0"
+                                    maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="OperatingUnitContact">
+        <xs:sequence>
+            <xs:element name="ContactType" type="xs:string" minOccurs="0"/>
+            <xs:element name="Primary" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="Contact" type="xs:string" minOccurs="0"/>
+            <xs:element name="ContactName" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="PositionContact">
+        <xs:sequence>
+            <xs:element name="ContactType" type="xs:string" minOccurs="0"/>
+            <xs:element name="Primary" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="Contact" type="xs:string" minOccurs="0"/>
+            <xs:element name="ContactName" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="VacationInfo">
+        <xs:sequence>
+            <xs:element name="StartDate" type="xs:string"/>
+            <xs:element name="EndDate" type="xs:string"/>
+            <xs:element name="Type" type="xs:string"/>
+            <xs:element name="VacationDays" type="xs:integer"/>
+            <xs:element name="HRSystemReferenceId" type="xs:string"/>
+            <xs:element name="ContractId" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="EmployeeData">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:string"/>
+            <xs:element name="EmploymentDate" type="xs:string"/>
+            <xs:element name="ContractNumber" type="xs:string"/>
+            <xs:element name="AgreementNumber" type="xs:string"/>
+            <xs:element name="AccountNumber" type="xs:string"/>
+            <xs:element name="JobTitle" type="xs:string"/>
+            <xs:element name="Company" type="xs:string"/>
+            <xs:element name="ContractStatus" type="xs:string"/>
+            <xs:element name="CumulativeContractStatus" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Team">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:string"/>
+            <xs:element name="Name" type="xs:string"/>
+            <xs:element name="ParentTeam" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TeamMember">
+        <xs:sequence>
+            <xs:element name="Identity" type="IdentitySearchResult"/>
+            <xs:element name="PositionId" type="xs:string"/>
+            <xs:element name="TeamId" type="xs:string"/>
+            <xs:element name="TeamName" type="xs:string"/>
+            <xs:element name="Supervisor" type="xs:boolean"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Position">
+        <xs:sequence>
+            <xs:element name="PositionId" type="xs:string"/>
+            <xs:element name="positionName" type="xs:string"/>
+            <xs:element name="Description" type="xs:string"/>
+            <xs:element name="DescriptionEng" type="xs:string"/>
+            <xs:element name="FullTimeEquivalency" type="xs:float"/>
+            <xs:element name="FullTimeEquivalencyUsed" type="xs:float"/>
+            <xs:element name="Multiposition" type="xs:boolean"/>
+            <xs:element name="ValidFrom" type="xs:string"/>
+            <xs:element name="ValidTo" type="xs:string"/>
+            <xs:element name="OperatingUnitNumber" type="xs:string"/>
+            <xs:element name="OperatingUnitName" type="xs:string"/>
+            <xs:element name="ParentPositionId" type="xs:string"/>
+            <xs:element name="IdentityList" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Identity" type="IdentitySearchResult" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="RemainingVacationDays">
+        <xs:sequence>
+            <xs:element name="HRSystemReferenceId" type="xs:string"/>
+            <xs:element name="ContractId" type="xs:string"/>
+            <xs:element name="RemainingDays" type="xs:integer"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="IdentityBasicData">
+        <xs:sequence>
+            <xs:element name="UserName" type="xs:string"/>
+            <xs:element name="IdentityId" type="xs:integer"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="MonthDay">
+        <xs:sequence>
+            <xs:element name="Month" type="xs:integer"/>
+            <xs:element name="Day" type="xs:integer"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="OperatingUnitStructureEntity">
+        <xs:sequence>
+            <xs:element name="OperatingUnitNumber" type="xs:string" minOccurs="0"/>
+            <xs:element name="OperatingUnitName" type="xs:string" minOccurs="0"/>
+            <xs:element name="OperatingUnitType" type="OperatingUnitTypeEnum" minOccurs="0"/>
+            <xs:element name="ReportsTo" type="xs:string" minOccurs="0"/>
+            <xs:element name="PositionManagerId" type="xs:string" minOccurs="0"/>
+            <xs:element name="TotalPositionsInUnit" type="xs:integer" minOccurs="0"/>
+            <xs:element name="PositionFTE" type="xs:decimal" minOccurs="0"/>
+            <xs:element name="PositionFTEUsed" type="xs:decimal" minOccurs="0"/>
+            <xs:element name="WorkersAssigned" type="xs:integer" minOccurs="0"/>
+            <xs:element name="PositionList" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Position" type="OperatingUnitStructurePosition" minOccurs="0"
+                                    maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="OperatingUnitStructurePosition">
+        <xs:sequence>
+            <xs:element name="PositionId" type="xs:string"/>
+            <xs:element name="ReportsToPosition" type="xs:string"/>
+            <xs:element name="IdentityList" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Identity" type="IdentitySearchResult" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="IDMUserData">
+        <xs:sequence>
+            <xs:element name="Username" type="xs:string"/>
+            <xs:element name="Name" type="xs:string"/>
+            <xs:element name="PersonUID" type="xs:string"/>
+            <xs:element name="IsInactive" type="xs:boolean"/>
+            <xs:element name="isTemporaryDeactivated" type="xs:boolean"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!--VACATION APPLICATIONS-->
+    <xs:complexType name="VacationApplication">
+        <xs:sequence>
+            <xs:element name="VacationApplicationRecId" type="xs:long"/>
+            <xs:element name="AbsenceRecId" type="xs:long"/>
+            <xs:element name="AbsenceTypeRecId" type="xs:long"/>
+            <xs:element name="AbsenceTypeName" type="xs:string"/>
+            <xs:element name="IsApplicationOverdue" type="xs:boolean"/>
+            <xs:element name="hasActualAbsence" type="xs:boolean"/>
+            <xs:element name="EmploymentRecId" type="xs:long"/>
+            <xs:element name="IdentityId" type="xs:integer"/>
+            <xs:element name="Name" type="xs:string"/>
+            <xs:element name="Company" type="xs:string"/>
+            <xs:element name="Days" type="xs:integer"/>
+            <xs:element name="DateRange" type="DateRange"/>
+            <xs:element name="Text" type="xs:string"/>
+            <xs:element name="ApprovedBy" type="xs:long"/>
+            <xs:element name="ApprovedByIdentityId" type="xs:integer"/>
+            <xs:element name="ApprovedByName" type="xs:string"/>
+            <xs:element name="CreatedDate" type="xs:dateTime"/>
+            <xs:element name="DateOfApproving" type="xs:dateTime"/>
+            <xs:element name="OperatingUnitNumber" type="xs:string"/>
+            <xs:element name="OperatingUnitName" type="xs:string"/>
+            <xs:element name="PositionForApproving" type="xs:long"/>
+            <xs:element name="PositionForApprovingNameList" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Name" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Status" type="xs:string"/>
+            <xs:element name="DocumentList" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Document" type="AbsenceDocument" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="AbsenceType">
+        <xs:sequence>
+            <xs:element name="AbsenceTypeRecId" type="xs:long"/>
+            <xs:element name="AbsenceTypeName" type="xs:string"/>
+            <xs:element name="EarnedDays" type="xs:integer"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="AbsenceDocument">
+        <xs:sequence>
+            <xs:element name="RecId" type="xs:long"/>
+            <xs:element name="Name" type="xs:string"/>
+            <xs:element name="FileType" type="xs:string"/>
+            <xs:element name="Content" type="xs:base64Binary"/>
+            <xs:element name="Comment" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Employment">
+        <xs:sequence>
+            <xs:element name="Company" type="xs:string"/>
+            <xs:element name="EmploymentRecId" type="xs:long"/>
+            <xs:element name="ValidFrom" type="xs:dateTime"/>
+            <xs:element name="ValidTo" type="xs:dateTime"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="VacationApplicationHistory">
+        <xs:sequence>
+            <xs:element name="PositionForApproving" type="xs:long"/>
+            <xs:element name="ToWhomForwarded" type="xs:integer"/>
+            <xs:element name="ToWhomForwardedPersonName" type="xs:string"/>
+            <xs:element name="WhoForwarded" type="xs:integer"/>
+            <xs:element name="WhoForwardedPersonName" type="xs:string"/>
+            <xs:element name="ApprovedDeclinedBy" type="xs:integer"/>
+            <xs:element name="ApprovedDeclinedPersonName" type="xs:string"/>
+            <xs:element name="CreateDateTime" type="xs:dateTime"/>
+            <xs:element name="DateOfApproving" type="xs:dateTime"/>
+            <xs:element name="ApprovingStatus" type="xs:string"/>
+            <xs:element name="Comment" type="xs:string"/>
+            <xs:element name="FromDate" type="xs:dateTime"/>
+            <xs:element name="ToDate" type="xs:dateTime"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!--RECRUITING PROJECT-->
+    <xs:complexType name="RecruitmentAnswerType">
+        <xs:sequence>
+            <xs:element name="AnswerType" type="xs:integer"/>
+            <xs:element name="Description" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="RecruitmentIdentificationType">
+        <xs:sequence>
+            <xs:element name="IdentificationType" type="xs:string"/>
+            <xs:element name="Description" type="xs:string"/>
+            <xs:element name="IdentificationTypeRecId" type="xs:long"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="RecruitmentJobAdQuestionnairyGroup">
+        <xs:sequence>
+            <xs:element name="Priority" type="xs:integer"/>
+            <xs:element name="QueryGroup" type="xs:string"/>
+            <xs:element name="QueryGroupRecId" type="xs:long"/>
+            <xs:element name="DataArea" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="RecruitmentLanguageCode">
+        <xs:sequence>
+            <xs:element name="Description" type="xs:string"/>
+            <xs:element name="LanguageCode" type="xs:string"/>
+            <xs:element name="LanguageCodeRecId" type="xs:long"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="RecruitmentProjectStatus">
+        <xs:sequence>
+            <xs:element name="StatusId" type="xs:integer"/>
+            <xs:element name="StatusName" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="RecruitmentDocument">
+        <xs:sequence>
+            <xs:element name="DocuDataString" type="xs:base64Binary"/>
+            <xs:element name="DocuFileName" type="xs:string"/>
+            <xs:element name="DocuFileType" type="xs:string"/>
+            <xs:element name="DocuRefRecId" type="xs:long"/>
+            <xs:element name="Notes" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="RecruitmentJobAdQuestionnaire">
+        <xs:sequence>
+            <xs:element name="Answer" type="xs:string"/>
+            <xs:element name="RecruitmentAnswerType" type="RecruitmentAnswerType"/>
+            <xs:element name="RecruitmentJobAdQuestionnairyGroup" type="RecruitmentJobAdQuestionnairyGroup"/>
+            <xs:element name="QueryText" type="xs:string"/>
+            <xs:element name="SortOrder" type="xs:decimal"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="RecruitmentJobAdSectionType">
+        <xs:sequence>
+            <xs:element name="Name" type="xs:string"/>
+            <xs:element name="SectionType" type="xs:integer"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="RecruitmentJobAdSection">
+        <xs:sequence>
+            <xs:element name="Content" type="xs:string"/>
+            <xs:element name="RecruitmentJobAdSectionType" type="RecruitmentJobAdSectionType"/>
+            <xs:element name="SectionName" type="xs:string"/>
+            <xs:element name="SortOrder" type="xs:decimal"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="RecruitmentJobAd">
+        <xs:sequence>
+            <xs:element name="JobAdPicture" type="xs:string"/>
+            <xs:element name="RecruitmentLanguageCode" type="RecruitmentLanguageCode"/>
+            <xs:element name="Name" type="xs:string"/>
+            <xs:element name="Location" type="xs:string"/>
+            <xs:element name="RecruitmentJobAdQuestionnaireList" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="RecruitmentJobAdQuestionnaire" type="RecruitmentJobAdQuestionnaire" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="JobAdSectionList" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="RecruitmentJobAdSection" type="RecruitmentJobAdSection" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="RecruitmentProject">
+        <xs:sequence>
+            <xs:element name="EmploymentLegalEntity" type="xs:string"/>
+            <xs:element name="DataArea" type="xs:string"/>
+            <xs:element name="FinalDate" type="xs:dateTime"/>
+            <xs:element name="RecruitmentPosition" type="RecruitmentPosition"/>
+            <xs:element name="ProjectID" type="xs:string"/>
+            <xs:element name="ProjectName" type="xs:string"/>
+            <xs:element name="ProjectRecId" type="xs:string"/>
+            <xs:element name="RecruitmentStatus" type="RecruitmentProjectStatus"/>
+            <xs:element name="StartDate" type="xs:dateTime"/>
+            <xs:element name="RecruitmentAdCountry" type="RecruitmentAdCountry"/>
+            <xs:element name="RecruitmentWorkCategory" type="RecruitmentWorkCategory"/>
+            <xs:element name="RecruitmentJobAdContractList" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="RecruitmentJobAdContract" type="RecruitmentJobAd" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="RecruitmentPosition">
+        <xs:sequence>
+            <xs:element name="PositionId" type="xs:string"/>
+            <xs:element name="PositionNameEng" type="xs:string"/>
+            <xs:element name="PositionNameLocal" type="xs:string"/>
+            <xs:element name="PositionRecId" type="xs:long"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="RecruitmentAdCountry">
+        <xs:sequence>
+            <xs:element name="Country" type="xs:string"/>
+            <xs:element name="Description" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="RecruitmentWorkCategory">
+        <xs:sequence>
+            <xs:element name="CategoryId" type="xs:integer"/>
+            <xs:element name="CategoryName" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="AccountingEmail">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:short"/>
+            <xs:element name="Country" type="xs:string"/>
+            <xs:element name="Email" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="RecruitmentApplicant">
+        <xs:sequence>
+            <xs:element name="ApplicantId" type="xs:string"/>
+            <xs:element name="BirthDay" type="xs:dateTime"/>
+            <xs:element name="Email" type="xs:string"/>
+            <xs:element name="IdentificationNumber" type="xs:string"/>
+            <xs:element name="IdentificationTypeRecId" type="xs:long"/>
+            <xs:element name="Person" type="RecruitmentPerson"/>
+            <xs:element name="Phone" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="RecruitmentPerson">
+        <xs:sequence>
+            <xs:element name="FirstName" type="xs:string"/>
+            <xs:element name="LastName" type="xs:string"/>
+            <xs:element name="Party" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="RecruitmentApplication">
+        <xs:sequence>
+            <xs:element name="Applicant" type="RecruitmentApplicant"/>
+            <xs:element name="ApplicationId" type="xs:string"/>
+            <xs:element name="DataArea" type="xs:string"/>
+            <xs:element name="RecruitmentJobAdQuestionnaireList" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="RecruitmentJobAdQuestionnaire" type="RecruitmentJobAdQuestionnaire" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ProjectRecId" type="xs:long"/>
+            <xs:element name="Status" type="xs:string"/>
+            <xs:element name="CoverLetter" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="RecruitmentApplicantInterview">
+        <xs:sequence>
+            <xs:element name="ApplicationId" type="xs:string"/>
+            <xs:element name="DataArea" type="xs:string"/>
+            <xs:element name="StartTime" type="xs:integer"/>
+            <xs:element name="EndTime" type="xs:integer"/>
+            <xs:element name="InterviewDate" type="xs:dateTime"/>
+            <xs:element name="Interviewer" type="RecruitmentPerson"/>
+            <xs:element name="ProjectID" type="xs:string"/>
+            <xs:element name="Status" type="xs:string"/>
+            <xs:element name="Where" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

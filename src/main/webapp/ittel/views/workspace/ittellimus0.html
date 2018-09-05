@@ -1,0 +1,616 @@
+<div ui-view="header" xmlns:text-align="http://www.w3.org/1999/xhtml"
+     xmlns:text-align="http://www.w3.org/1999/xhtml" xmlns:background-color="http://www.w3.org/1999/xhtml"
+     xmlns:background-color="http://www.w3.org/1999/xhtml" xmlns:background-color="http://www.w3.org/1999/xhtml"></div>
+
+
+<div>
+    <h2 align="center" style="padding-right:150px; color: #376f9e">Tallink IT TELLIMUS 0.7.0</h2>
+    <br>
+
+    <div>
+        <span ng-show="authUser.username" style="margin-left: 15px">User: <span style="color: darkred"><b>{{authUser.username}}</b></span></span>
+        <div class="row">
+            <div class="col-sm-2" class="mainmenu">
+                <ul class="nav nav-tabs nav-stacked mainmenu" role="tablist">
+                    <li ng-class="{'active': view_tab == 'orders'}">
+                        <a class="btn-lg" ng-click="changeTab('orders')" href="">Orders</a>
+                    </li>
+
+                    <li ng-class="{'active selected_menu': view_tab == 'assets'}">
+                        <a class="btn-lg" ng-click="changeTab('assets')" href="">Assets</a>
+                    </li>
+                </ul>
+
+                <div
+                        id="status" style="background: #f2f5f9; width: 100%; min-height: 40px;
+                          margin-top: 50px; margin-left: 5px">
+
+                        <span id="dnsprogress" class="progress" style="min-width: 150px; display: none">
+                            <span class="progressmessage"></span>
+                            <progress max="100" value="0"></progress>
+                            <span class="progress-value"></span>
+                            <span class="progress-bg">
+                            <span class="progress-bar"></span></span>
+                        </span>
+
+                    <span id="certprogress" class="progress" style="min-width: 150px; display: none">
+                            <span class="progressmessage"></span>
+                            <progress max="100" value="0"></progress>
+                            <span class="progress-value"></span>
+                            <span class="progress-bg">
+                            <span class="progress-bar"></span></span>
+                        </span>
+
+
+                    <div style="color: darkgreen;" ng-show="statusMessage">
+                        {{statusMessage}}
+                    </div>
+
+                    <div style="color: red;" ng-show="error && errorMessage">
+                        {{errorMessage}}
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-sm-10" style="padding-left: 5px">
+
+                <div ng-show="view_tab == 'orders'" style="" id="orders">
+
+                    <div class="basket" ng-show="isShowBasket()">
+                        <div style="margin-left: 10px"><b>YOUR BASKET</b></div>
+                        <hr class="divider">
+                        <table class="basketitems">
+
+                            <tr>
+                                <colgroup>
+                                    <col span="1" style="width: 60%;">
+                                    <col span="1" style="width: 20%;">
+                                    <col span="1" style="width: 10%;">
+                                </colgroup>
+
+                                <thead>
+                                <tr class="header">
+                                    <th class="basket_header">Item</th>
+                                    <th class="basket_header">
+                                        Amount
+                                    </th>
+                                    <th class="cell_header_ctrls">
+                                        ...
+                                    </th>
+                                </tr>
+                                </thead>
+                            </tr>
+                            <tr>
+                                <tbody>
+
+
+                                <tr ng-repeat="item in basket">
+                                    <td>
+                                        {{item.name}}
+                                    </td>
+                                    <td>
+                                        ({{item.amount}})
+                                    </td>
+                                    <td>
+                                        <button type="button" class="button_delete"
+                                                ng-click='onDeleteBasketItem(item.id)'>X
+                                        </button>
+                                    </td>
+                                <tr>
+                                </tbody>
+                            </tr>
+
+                        </table>
+
+                    </div>
+                    <!--<hr class="divider" style="clear: both;">-->
+
+                    <div class="block countries" ng-show="isShowCountries()">
+
+                        <span class="blockheader">YOUR COUNTRY</span>
+                        <hr class="divider">
+
+                        <div class="countrylinks">
+                        <a id="est" href="" class="btn" ng-click="chooseCountry('est');">
+                            <img src="images/est.png" alt=""/>
+                            <span>ESTONIA</span>
+                        </a>
+                        <a id="swed" href="" class="btn" ng-click="chooseCountry('swed')">
+                            <img src="images/swed.png" alt=""/>
+                            <span>SWEDEN</span>
+                        </a>
+                        <a id="fin" href="" class="btn" ng-click="chooseCountry('fin')">
+                            <img src="images/finl.png" alt=""/>
+                            <span>FINLAND</span>
+                        </a>
+                        <a id="lat" href="" class="btn" ng-click="chooseCountry('lat')">
+                            <img src="images/latv.png" alt=""/>
+                            <span>LATVIA</span>
+                        </a>
+                        </div>
+                    </div>
+
+
+                    <div class="block types" id="orderTypes" ng-show="isShowTypes()">
+
+                        <span class="blockheader"><b>ADD ITEM</b></span>
+                        <hr class="divider">
+
+                        <span style="margin-left: 20px">
+                                <select size="6" id="order_itemtypes" class="typeselect"
+                                        ng-model="orderTypeId"
+                                        ng-change="onSelectOrderType()">
+                                    <option ng-repeat="type in types"
+                                            ng-class="{selected_item: type.id == orderTypeId}"
+                                            value="{{type.id}}"
+                                    >{{type.name}}</option>
+                                </select>
+                             </span>
+
+                    </div>
+
+
+                    <div class="block items" id="orderItems" ng-show="isShowItems()">
+
+                        <span class="blockheader">{{typerecord.name}}</span>
+                        <hr class="divider">
+
+                        <span style="margin-left: 20px;">
+                                <select size="8" id="order_items" class="itemselect"
+                                        ng-model="orderItemId"
+                                        ng-dblclick="onAddOrderItem()"
+                                        ng-change="onSelectOrderItem()"
+                                >
+                                    <option ng-repeat="item in orderItems"
+                                            ng-class="{selected_item: item.id == orderItemId}"
+                                            value="{{item.id}}">{{item.name}}</option>
+
+                                </select>
+                         </span>
+
+
+                        <div id="itemDesc" class="preorder itemDesc">
+                        </div>
+
+                        <div class="preorder notification" ng-show="showApprovalNotification()">
+                            <span>NB! Management approval required for non-STANDARD order</span>
+                        </div>
+
+                        <div class="preorder managerappr" ng-show="showApprovalNotification()">
+                            <span class="managertxt">Select manager name for approval</span>
+                            <select style="font-weight: bold" ng-model="itemManager">
+                                <option ng-repeat="man in managers"
+                                        value="{{man.name}}">{{man.name}}&nbsp;{{man.surname}}
+                                </option>
+
+                            </select>
+                        </div>
+
+                        <div class="placetobasket">
+
+                            <button id="addbasket" class="addbasket"
+                                    ng-disabled="placeBasketDisabled()"
+                                    ng-click="onAddToBasket()">
+
+                                ADD TO BASKET
+                            </button>
+
+                            <button id="goorder" class="goorder"
+                                    ng-show="goOrderShow()"
+                                    ng-click="toOrderPage()"
+                                    ng-disabled="goOrderDisabled()"
+                            >
+                                CONTINUE TO ORDER
+                            </button>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div class="block makeorder" ng-show="isCreateOrder()">
+
+                        <div class="blockheader"><b>YOUR ORDER</b></div>
+                        <hr class="divider">
+
+                        <div class="orderitems">
+                            <ul class="leaders">
+
+                                <li ng-repeat="item in order">
+                                    <span>{{item.typename}},&nbsp;{{item.name}}</span>
+                                    <span>({{item.amount}})</span></li>
+
+
+                            </ul>
+<!--
+                            <table>
+                                <tr>
+                                    <colgroup>
+                                        <col span="1" style="width: 95%;">
+                                        <col span="1" style="width: 5%;">
+                                    </colgroup>
+                                </tr>
+                                <tr>
+                                    <tbody>
+
+                                    <tr ng-repeat="item in order">
+                                        <td>
+                                            {{item.typename}},&nbsp;{{item.name}}&nbsp;{{item.description}}
+                                        </td>
+                                        <td>
+                                            ({{item.amount}})
+                                        </td>
+                                    <tr>
+                                    </tbody>
+                                </tr>
+
+                            </table>
+-->
+                        </div>
+
+
+                        <hr class="divider">
+
+                        <div class="ordernotes">
+                            <span class="managersnote" ng-show="orderManagers()">
+                                My Order will be approved by:&nbsp;&nbsp;
+                            </span>
+                            <span style="font-weight: bold">{{orderManagers()}}</span>
+                            <div class="orderresultmessage" ng-show="order.result">
+                                <b>YOUR ORDER RESULT:</b>
+                                &nbsp;&nbsp;
+                                <span ng-show="order.result.ticketId">
+                                    <span class="ordersuccess">
+                                        <b>SUCCESS!</b> &nbsp;&nbsp;&nbsp;&nbsp;
+                                    </span>
+                                    Ticket :&nbsp;&nbsp;
+                                    <span class="ordersuccess">
+                                        {{order.result.ticketId}}
+                                    </span>
+
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                Link:  <a href="{{order.result.ticketLink}}">{{order.result.ticketLink}}</a>
+                            </span>
+
+                                <span ng-show="!order.result.ticketId">
+                                <span class="ordererror">NOT CREATED!</span> &nbsp;&nbsp;&nbsp;Error: &nbsp;&nbsp;
+                                <span class="ordererror">
+                                {{order.result.message}}</span>
+                            </span>
+                            </div>
+                        </div>
+
+
+                        <div class="placeordercmd">
+                            <button id="cmdCreateorder" class="createorder"
+                                    ng-disabled="createOrderDisabled()"
+                                    ng-click="onCreateOrder()"
+                            >
+                                PLACE ORDER
+                            </button>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <div ng-show="view_tab == 'assets'" style="" id="assets">
+
+                    <div style="width: 45%; height: 40%; margin-bottom: 10px;">
+                    </div>
+
+                    <!--
+                                        &lt;!&ndash;<hr class="divider" style="clear: both;">&ndash;&gt;
+
+                    -->
+                    <div class="assettypes" id="typeTable">
+
+
+                        <span class="add_button">
+                            <span class="blockheader">ITEM TYPES</span>
+                            <button type="button" class="button_add"
+                                    ng-disabled="!isTypeNewAllowed()"
+                                    ng-class="{'disabled-class': !isTypeNewAllowed()}"
+                                    id="addType" ng-click='onAddTypeRecord()'>Add Type
+                            </button>
+                        </span>
+
+                        <div class="assetitems_inner">
+
+                            <table class="typerecords" id="typerecords"
+                                   width=98%" cellspacing="0" cellpadding="0" border="0">
+
+                                <tr>
+                                    <colgroup>
+                                        <col span="1" style="width: 4%;">
+                                        <col span="1" style="width: 80%;">
+                                        <col span="1" style="width: 20%;">
+                                    </colgroup>
+
+                                    <thead>
+                                    <tr class="header">
+                                        <th class="cell_header cell_header_number">#</th>
+                                        <th class="cell_header" ng-click="onTypeColumnSort('name')">
+                                            Item Type
+                                            <span ng-show="orderpage.typeField == 'name'">
+                                        <span ng-show="!typeReverseSort">▲</span>
+                                        <span ng-show="typeReverseSort">▼</span>
+                                        </span>
+                                        </th>
+
+                                        <th class="cell_header_ctrls">
+                                            ...
+                                        </th>
+
+                                    </tr>
+                                    </thead>
+
+                                </tr>
+
+                                <tbody>
+                                <tr
+                                        ng-repeat="type in types" ng-show="isShowTypeRecord($index)"
+                                        ng-click="setSelectedType(type.storageId)"
+                                        ng-class="{selected_item: type.storageId === idSelectedType}"
+                                >
+
+                                    <td class="cell_number cell_default">
+                                        {{$index+1}}
+                                    </td>
+
+                                    <td class="cell_default">
+                                    <span
+                                            ng-show="isTypeNameEditAllowed(type.id)">
+
+                                        <input id='tname{{type.id}}' type="text"
+                                               class="itemedit"
+                                               esc-key='onCancelTypeEdit(type.id)'
+                                               ng-enter='onSaveTypeRecord(type.id)'
+                                               ng-model='type.name'
+                                        />
+                                    </span>
+
+
+                                        <span
+                                                style="{{nameStyle(type)}}"
+                                                ng-show="!isTypeNameEditAllowed(type.id)">
+                                             {{type.name}}
+                                    </span>
+
+
+                                    </td>
+
+                                    <td class="cell_ctrl_buttons cell_default">
+                                        <button id="type_store" type="button"
+                                                class="button_save button_default"
+                                                ng-show='isTypeEditState(type.id)'
+                                                ng-disabled='isTypeNameSaveDisabled(type.id)'
+                                                ng-click='onSaveTypeRecord(type.id)'>Save
+                                        </button>
+                                        &nbsp;&nbsp;
+
+
+                                        <button id="type_del" type="button" class="button_delete"
+                                                ng-show='isTypeDeleteAllowed(type.id)'
+                                                ng-click='onDeleteType(type.id)'>X
+                                        </button>
+
+                                        <button id="type_edit" type="button" class="button_edit button_default"
+                                                ng-show='isTypeEditable(type.id)'
+                                                ng-disabled='!isTypeEditAllowed()'
+                                                ng-class="{'disabled-class': !isTypeEditAllowed()}"
+                                                ng-click='onEditTypeRecord(type.id)'>Edit
+                                        </button>
+
+                                    </td>
+
+                                </tr>
+
+                                </tbody>
+
+                            </table>
+                        </div>
+
+                    </div>
+
+
+                    <div class="assetitems" id="itemTable">
+                        <span class="add_button">
+                            <span class="blockheader">ITEMS</span>
+                            <button type="button" class="button_add"
+                                    ng-disabled="!isItemNewAllowed()"
+                                    ng-class="{'disabled-class': !isItemNewAllowed()}"
+                                    id="addItem" ng-click='onAddItemRecord()'>Add Item
+                            </button>
+                        </span>
+
+                        <div class="assetitems_inner">
+
+                            <table class="typerecords" id="itemrecords" width=100%" cellspacing="0" cellpadding="0"
+                                   border="0" style="table-layout: fixed;">
+
+                                <tr>
+                                    <colgroup>
+                                        <col span="1" style="min-width: 36%;">
+                                        <col span="1" style="width: 44%;">
+                                        <col span="1" style="width: 4%;">
+                                        <col span="1" style="width: 15%;">
+                                    </colgroup>
+
+                                    <thead>
+                                    <tr class="header">
+                                        <th class="cell_header" ng-click="onItemColumnSort('name')">
+                                            Item
+                                            <span ng-show="orderpage.itemField == 'name'">
+                                        <span ng-show="!itemReverseSort">▲</span>
+                                        <span ng-show="itemReverseSort">▼</span>
+                                        </span>
+                                        </th>
+
+                                        <th class="cell_header" ng-click="onItemColumnSort('description')">
+                                            Description
+                                            <span ng-show="orderpage.itemField == 'description'">
+                                        <span ng-show="!itemReverseSort">▲</span>
+                                        <span ng-show="itemEeverseSort">▼</span>
+                                        </span>
+                                        </th>
+                                        <th class="cell_header">
+                                            Approve
+                                        </th>
+
+                                        <th class="cell_header_ctrls">
+                                            ...
+                                        </th>
+
+                                    </tr>
+                                    </thead>
+
+                                </tr>
+
+                                <tbody>
+                                <tr ng-repeat="item in items" ng-show="isShowItemRecord($index)"
+                                    ng-click="setSelectedItem(item.storageId)"
+                                    ng-class="{selected_item: item.storageId === idSelectedItem}"
+                                >
+
+                                    <td class="cell_default">
+                                    <span
+                                            ng-show="isItemNameEditAllowed(item.id)">
+
+                                            <input id='name{{item.id}}' type="textarea"
+                                                   class="itemedit"
+                                                   esc-key='onCancelItemEdit(item.id, "name")'
+                                                   ng-enter='onSaveItemRecord(item.id)'
+                                                   ng-model="item.name"
+                                            />
+                                    </span>
+
+                                        <span
+                                                style="{{nameStyle(item)}}"
+                                                ng-show="!isItemNameEditAllowed(item.id)">
+                                             {{item.name}}
+                                    </span>
+
+                                    </td>
+
+                                    <td class="cell_default">
+                                    <span
+                                            ng-show="isItemNameEditAllowed(item.id)"
+                                    >
+                                    <input id='description{{item.id}}' type="text"
+                                           class="itemedit"
+                                           esc-key='onCancelItemEdit(item.id, "description")'
+                                           ng-enter='onSaveItemRecord(item.id)'
+                                           ng-model="item.description"
+                                    />
+                                    </span>
+
+                                        <span ng-show="!isItemNameEditAllowed(item.id)">
+                                             {{item.description}}
+                                    </span>
+
+                                    </td>
+
+                                    <td class="cell_default">
+                                        <input
+                                                type="checkbox"
+                                                id="needApprove{{item.id}}"
+                                                ng-model="item.needApprove"
+                                                ng-click="onSaveItemApproveStatus(item.id)"
+                                        >
+                                    </td>
+
+
+                                    <td class="cell_ctrl_buttons cell_default">
+                                        <button id="item_store" type="button"
+                                                class="button_save button_default"
+                                                ng-show='isItemEditState(item.id)'
+                                                ng-disabled='isItemNameSaveDisabled(item.id)'
+                                                ng-click='onSaveItemRecord(item.id)'>Save
+                                        </button>
+                                        <!--
+                                        &nbsp;&nbsp;
+                                        <button id="item_can" type="button" class="button_cancel button_default"
+                                                ng-show='isItemEditState(item.id)'
+                                                ng-click='onCancelItemEdit(item.id)'>Cancel
+                                        </button>
+                                        -->
+                                        &nbsp;&nbsp;
+
+                                        <button id="item_del" type="button" class="button_delete"
+                                                ng-show='isItemDeleteAllowed(item.id)'
+                                                ng-click='onDeleteItem(item.id)'>X
+                                        </button>
+
+                                        <button id="item_edit" type="button" class="button_edit button_default"
+                                                ng-show='isItemEditable(item.id)'
+                                                ng-disabled='!isItemEditAllowed(item.id)'
+                                                ng-class="{'disabled-class': !isItemEditAllowed(item.id)}"
+                                                ng-click='onEditItemRecord(item.id)'>Edit
+                                        </button>
+
+                                    </td>
+                                </tr>
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+                    <!-- assetitems!&ndash;&gt;
+                    -->
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</div>
+</div>
+
+
+<div id="confirmBox" class="modal">
+    <div class="modal-content">
+
+        <div class="message"></div>
+        <button class="yes" style="width: 50px">OK</button>
+        &nbsp;
+        <button class="no">Cancel</button>
+
+    </div>
+</div>
+
+<div id="confirmBoxStop" class="modal">
+    <div class="modal-content">
+
+        <div class="message"></div>
+        <button class="yes" style="width: 50px">OK</button>
+        &nbsp;
+        <button class="no">Cancel</button>
+
+    </div>
+</div>
+
+
+<div id="alertBox" class="modal">
+    <div class="modal-content">
+
+        <div class="message"></div>
+        <button class="yes" style="width: 50px">OK</button>
+
+    </div>
+</div>
+
+
+<div id="loading">
+    <div><img src="images/spinner.gif" width="20" height="20" alt="Be patient..."/>
+    </div>
+</div>
